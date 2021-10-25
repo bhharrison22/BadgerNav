@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_menu_buildinginfo.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/ic_menu_studentinfo.xml" value="0.3828125" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/drawable/side_nav_bar.xml" value="0.3828125" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/layout/activity_map.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/layout/activity_nav_menu.xml" value="0.25" />
@@ -18,6 +27,7 @@
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/layout/student_resources_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/menu/nav_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
       </map>
     </option>
   </component>
