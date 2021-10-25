@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BadgerNav">
         <activity
+            android:name=".NavMenuActivity"
+            android:exported="true"
+            android:label="@string/title_activity_nav_menu"
+            android:theme="@style/Theme.BadgerNav.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

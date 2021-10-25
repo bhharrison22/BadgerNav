@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">BadgerNav</string>
+    <string name="title_activity_nav_menu">NavMenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="building_info">Building Info</string>
+    <string name="settings">Settings</string>
+    <string name="student_resources">Student Resources</string>
+    <string name="route_planner">Route Planner</string>
+    <string name="maps">Maps</string>
+    <string name="calendar_and_events">Calendar and Events</string>
+    <string name="menu_calendar">Calendar</string>
 </resources>

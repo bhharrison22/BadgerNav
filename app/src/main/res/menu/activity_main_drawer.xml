@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Calendar"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/calendar_and_events" />
+        <item
+            android:id="@+id/nav_Maps"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/maps" />
+        <item
+            android:id="@+id/nav_RoutePlanner"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/route_planner" />
+        <item
+            android:id="@+id/nav_BuildingInfo"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/building_info" />
+        <item
+            android:id="@+id/nav_StudentResources"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/student_resources" />
+        <item
+            android:id="@+id/nav_Settings"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/settings" />
+    </group>
+</menu>

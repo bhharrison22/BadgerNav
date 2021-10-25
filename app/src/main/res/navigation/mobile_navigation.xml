@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_Calendar">
+
+    <fragment
+        android:id="@+id/nav_Calendar"
+        android:name="com.example.badgernav.ui.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/calendar_fragment" />
+
+    <fragment
+        android:id="@+id/nav_Maps"
+        android:name="com.example.badgernav.ui.map.MapFragment"
+        android:label="Maps"
+        tools:layout="@layout/map_fragment" />
+
+    <fragment
+        android:id="@+id/nav_RoutePlanner"
+        android:name="com.example.badgernav.ui.routeplanner.RoutePlannerFragment"
+        android:label="Route Planner"
+        tools:layout="@layout/route_planner_fragment" />
+
+    <fragment
+        android:id="@+id/nav_BuildingInfo"
+        android:name="com.example.badgernav.ui.buildinginfo.BuildingInfoFragment"
+        android:label="Building Info"
+        tools:layout="@layout/building_info_fragment" />
+
+    <fragment
+        android:id="@+id/nav_StudentResources"
+        android:name="com.example.badgernav.ui.studentresources.StudentResourcesFragment"
+        android:label="Student Resources"
+        tools:layout="@layout/student_resources_fragment" />
+    s
+    <fragment
+        android:id="@+id/nav_Settings"
+        android:name="com.example.badgernav.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings_fragment" />
+
+</navigation>
