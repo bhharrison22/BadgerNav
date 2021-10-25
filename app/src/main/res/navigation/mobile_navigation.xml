@@ -34,7 +34,7 @@
         android:name="com.example.badgernav.ui.studentresources.StudentResourcesFragment"
         android:label="Student Resources"
         tools:layout="@layout/student_resources_fragment" />
-    s
+
     <fragment
         android:id="@+id/nav_Settings"
         android:name="com.example.badgernav.ui.settings.SettingsFragment"
