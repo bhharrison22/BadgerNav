@@ -10,24 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BadgerNav">
         <activity
-            android:name=".SettingsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".StudentResourcesActivity"
-            android:exported="true" />
-        <activity
-            android:name=".BuildingInfoActivity"
-            android:exported="true" />
-        <activity
-            android:name=".RoutePlannerActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MapActivity"
-            android:exported="true" />
-        <activity
-            android:name=".CalendarActivity"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
