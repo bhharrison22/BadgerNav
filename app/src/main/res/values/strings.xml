@@ -20,13 +20,237 @@
     <string name="menu_calendar">Calendar</string>
 
     <string-array name="test_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
+        <item>United States</item>
+        <item>Israel</item>
+        <item>Canada</item>
         <item>Mars</item>
         <item>Jupiter</item>
         <item>Saturn</item>
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <string-array name="building_array">
+        <item>Erickson Hall</item>
+        <item>1410 Engineering Dr.</item>
+        <item>1433 Monroe St.</item>
+        <item>1610 University Ave.</item>
+        <item>1800 University Ave.</item>
+        <item>1910 Linden Dr.</item>
+        <item>206 Bernard Ct.</item>
+        <item>209 N. Brooks St.</item>
+        <item>215-217 N. Brooks St.</item>
+        <item>21 N. Park St.</item>
+        <item>30 N. Mills St.</item>
+        <item>333 East Campus Mall</item>
+        <item>432 East Campus Mall</item>
+        <item>445 Henry Mall</item>
+        <item>45 N. Charter St.</item>
+        <item>502 Herrick Dr.</item>
+        <item>702 W. Johnson St.</item>
+        <item>711 State St.</item>
+        <item>901 University Bay Dr.</item>
+        <item>Adams Residence Hall</item>
+        <item>Agricultural Bulletin Building</item>
+        <item>Agricultural Dean\'s Residence</item>
+        <item>Agricultural Engineering Building</item>
+        <item>Agricultural Engineering Laboratory</item>
+        <item>Agricultural Hall</item>
+        <item>"Alumni Hall, 1100 Delaplaine Ct."</item>
+        <item>American Family Children\'s Hospital</item>
+        <item>Animal Science Building</item>
+        <item>Apartment Facilities Office</item>
+        <item>Armory and Gymnasium (Red Gym)</item>
+        <item>Art Lofts</item>
+        <item>Athletics Operations Building</item>
+        <item>"Atmospheric, Oceanic and Space Sciences Building"</item>
+        <item>Babcock Hall</item>
+        <item>"Bakke Recreation &amp; Wellbeing Center (Under Construction, 2023)"</item>
+        <item>Bardeen Medical Laboratories</item>
+        <item>Barnard Residence Hall</item>
+        <item>Bascom Hall</item>
+        <item>Below Alumni Center</item>
+        <item>Bernie’s Place Childcare</item>
+        <item>Biotron Laboratory</item>
+        <item>Birge Hall</item>
+        <item>Bock Laboratories</item>
+        <item>Bradley Memorial Building</item>
+        <item>Bradley Residence Hall</item>
+        <item>Brogden Psychology Building</item>
+        <item>Camp Randall Sports Center</item>
+        <item>Camp Randall Stadium</item>
+        <item>Carillon Tower</item>
+        <item>Carl Schuman Shelter</item>
+        <item>Carson Gulley Center</item>
+        <item>Cereal Crops Research Unit</item>
+        <item>Chadbourne Residence Hall</item>
+        <item>Chamberlin Hall</item>
+        <item>Chamberlin House (Kronshage)</item>
+        <item>Charter Street Heating and Cooling Plant</item>
+        <item>Chazen Museum of Art</item>
+        <item>Chemistry Building</item>
+        <item>Cole Residence Hall</item>
+        <item>Computer Sciences</item>
+        <item>Conover House (Kronshage)</item>
+        <item>Conrad A. Elvehjem Building</item>
+        <item>Dairy Barn</item>
+        <item>Dairy Cattle Center</item>
+        <item>Davis Residence Hall</item>
+        <item>D.C. Smith Greenhouse</item>
+        <item>Dejope Residence Hall</item>
+        <item>DeLuca Biochemical Sciences Building</item>
+        <item>DeLuca Biochemistry Building</item>
+        <item>DeLuca Biochemistry Laboratories</item>
+        <item>Discovery Building</item>
+        <item>Eagle Heights</item>
+        <item>Eagle Heights Buildings 101-108</item>
+        <item>Eagle Heights Buildings 201-209</item>
+        <item>Eagle Heights Buildings 301-309</item>
+        <item>Eagle Heights Buildings 401-408</item>
+        <item>Eagle Heights Buildings 501-509</item>
+        <item>Eagle Heights Buildings 601-610</item>
+        <item>Eagle Heights Buildings 701-819</item>
+        <item>Eagle Heights Buildings 901-946</item>
+        <item>Eagle Heights Community Center</item>
+        <item>Educational Sciences</item>
+        <item>Education Building</item>
+        <item>Engineering Centers Building</item>
+        <item>Engineering Hall</item>
+        <item>Engineering Research Building</item>
+        <item>Environmental Health and Safety Building</item>
+        <item>Enzyme Institute</item>
+        <item>Extension Building</item>
+        <item>Field House</item>
+        <item>Fleet and Service Garage</item>
+        <item>Fluno Center For Executive Education</item>
+        <item>Forest Products Laboratory</item>
+        <item>Genetics-Biotechnology Center Building</item>
+        <item>Gilman House (Kronshage)</item>
+        <item>Goodman Softball Complex</item>
+        <item>Goodnight Hall</item>
+        <item>Gordon Dining and Event Center</item>
+        <item>Grainger Hall</item>
+        <item>Hamel Music Center</item>
+        <item>Hanson Biomedical Sciences Building</item>
+        <item>Harlow Primate Lab</item>
+        <item>Harvey Street Apartments</item>
+        <item>Hasler Laboratory of Limnology</item>
+        <item>Health Sciences Learning Center</item>
+        <item>Helen C. White Hall</item>
+        <item>Hiram Smith Annex</item>
+        <item>Hiram Smith Hall</item>
+        <item>Holt Center (Kronshage)</item>
+        <item>Horse Barn</item>
+        <item>Horticulture</item>
+        <item>Humphrey Hall</item>
+        <item>Ingraham Hall</item>
+        <item>Integrative Biology Research Building</item>
+        <item>Jones House (Kronshage)</item>
+        <item>Jorns Hall</item>
+        <item>Kellner Hall</item>
+        <item>King Hall</item>
+        <item>Kronshage Residence Hall</item>
+        <item>LaBahn Arena</item>
+        <item>Lathrop Hall</item>
+        <item>Law Building</item>
+        <item>Leopold Residence Hall</item>
+        <item>Livestock Laboratory</item>
+        <item>Lowell Center</item>
+        <item>Mack House (Kronshage)</item>
+        <item>Materials Science and Engineering Building</item>
+        <item>McArdle Building</item>
+        <item>McClain Athletic Facility</item>
+        <item>Meat Microbiology Lab</item>
+        <item>Meat Science and Muscle Biology Lab</item>
+        <item>Meat Science &amp; Animal Biologics Discovery</item>
+        <item>Mechanical Engineering Building</item>
+        <item>Medical Sciences</item>
+        <item>Medical Sciences Center</item>
+        <item>Meiklejohn House</item>
+        <item>Memorial Library</item>
+        <item>Memorial Union</item>
+        <item>Merit Residence Hall</item>
+        <item>Microbial Sciences</item>
+        <item>Middleton Building</item>
+        <item>Moore Hall - Agronomy</item>
+        <item>Mosse Humanities Building</item>
+        <item>Music Hall</item>
+        <item>Nancy Nicholas Hall</item>
+        <item>Nicholas-Johnson Pavilion and Plaza</item>
+        <item>Nicholas Recreation Center</item>
+        <item>Nielsen Tennis Stadium</item>
+        <item>Noland Hall</item>
+        <item>North Hall</item>
+        <item>Nutritional Sciences</item>
+        <item>Observatory Hill Office Building</item>
+        <item>Ogg Residence Hall</item>
+        <item>Phillips Residence Hall</item>
+        <item>Plant Sciences</item>
+        <item>Police and Security Facility</item>
+        <item>Porter Boathouse</item>
+        <item>Poultry Research Laboratory</item>
+        <item>Pyle Center</item>
+        <item>Radio Hall</item>
+        <item>Rennebohm Hall</item>
+        <item>Russell Laboratories</item>
+        <item>Rust-Schreiner Hall</item>
+        <item>School of Social Work Building</item>
+        <item>Science Hall</item>
+        <item>Sellery Residence Hall</item>
+        <item>Service Building</item>
+        <item>Service Building Annex</item>
+        <item>Service Memorial Institute</item>
+        <item>Sewell Social Sciences</item>
+        <item>Showerman House (Kronshage)</item>
+        <item>Signe Skott Cooper Hall</item>
+        <item>Slichter Residence Hall</item>
+        <item>Smith Residence Hall</item>
+        <item>Soils Building</item>
+        <item>Southeast Residence Halls</item>
+        <item>South Hall</item>
+        <item>Steenbock Library</item>
+        <item>Sterling Hall</item>
+        <item>Stock Pavilion</item>
+        <item>Stovall Building (Wisconsin State Laboratory of Hygiene)</item>
+        <item>Sullivan Residence Hall</item>
+        <item>Swenson House (Kronshage)</item>
+        <item>Taylor Hall</item>
+        <item>Teacher Education</item>
+        <item>The Kohl Center</item>
+        <item>Tripp Residence Hall</item>
+        <item>Turner House (Kronshage)</item>
+        <item>Union South</item>
+        <item>University Club</item>
+        <item>University Hospital</item>
+        <item>University Houses</item>
+        <item>U.S. Dairy Forage Research Center</item>
+        <item>UW Foundation</item>
+        <item>UW Medical Foundation Centennial Building</item>
+        <item>Van Hise Hall</item>
+        <item>Van Vleck Hall</item>
+        <item>Veterans Administration Hospital</item>
+        <item>Veterinary Medicine</item>
+        <item>"Vet Med Expansion (Under Construction, 2023)"</item>
+        <item>Vilas Hall</item>
+        <item>Waisman Center</item>
+        <item>Walnut Street Greenhouse</item>
+        <item>Walnut Street Heating and Cooling Plant</item>
+        <item>WARF Office Building</item>
+        <item>Washburn Observatory</item>
+        <item>Water Science and Engineering Laboratory</item>
+        <item>Waters Residence Hall</item>
+        <item>Weeks Hall for Geological Sciences</item>
+        <item>Wendt Commons</item>
+        <item>West Campus Cogeneration Facility</item>
+        <item>Wisconsin Energy Institute</item>
+        <item>Wisconsin Historical Society</item>
+        <item>Wisconsin Institutes for Medical Research</item>
+        <item>Wisconsin Primate Center</item>
+        <item>Wisconsin Veterinary Diagnostic Laboratory</item>
+        <item>Witte Residence Hall</item>
+        <item>Zoe Bayliss Co-Op</item>
+        <item>1220 Capitol Court</item>
+    </string-array>
+
+
 </resources>

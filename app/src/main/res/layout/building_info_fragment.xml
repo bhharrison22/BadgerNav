@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Erickson Hall"
+            android:text="Bascom Hall"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
             android:id="@+id/capTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:text="Current Capacity"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,12 +44,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buildingName" />
 
-        <Spinner
+        <AutoCompleteTextView
             android:id="@+id/buildingDropDownList"
-            android:layout_width="234dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="231dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:hint="Bascom Hall"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hoursText" />
 
