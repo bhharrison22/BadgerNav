@@ -2,6 +2,9 @@ package com.example.badgernav.ui.routeplanner;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,5 +44,38 @@ public class RouteCreateEdit extends Fragment {
         view.setAdapter(adapter);
 
         mViewModel = new ViewModelProvider(this).get(RouteCreateEditViewModel.class);
+    }
+
+    public void back(View view){
+        Intent intent = new Intent(getContext(), RoutePlannerFragment.class);
+        startActivity(intent);
+    }
+
+    public void delete(View view){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+        builder1.setTitle("Are you sure you want to delete?");
+        builder1.setMessage("Deletion will remove the stop from the route");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getContext(), RoutePlannerFragment.class);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

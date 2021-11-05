@@ -25,6 +25,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:src="?attr/actionModeCloseDrawable"
+        android:onClick="back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +90,7 @@
         android:layout_marginStart="76dp"
         android:layout_marginTop="220dp"
         android:text="Delete"
+        android:onClick="delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
