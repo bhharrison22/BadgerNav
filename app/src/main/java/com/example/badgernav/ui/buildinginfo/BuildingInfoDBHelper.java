@@ -5,7 +5,6 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BuildingInfoDBHelper {
 
@@ -16,7 +15,7 @@ public class BuildingInfoDBHelper {
         this.sqLiteDatabase = sqLiteDatabase;
     }
 
-    public void createTables() {
+    public void createTable() {
         //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); // delete old Building Info Table TODO: remove this line once db is set up
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 " (id INTEGER PRIMARY KEY, name TEXT, address TEXT, hours TEXT, floormap TEXT)"); // Create Building Info Table
@@ -35,7 +34,7 @@ public class BuildingInfoDBHelper {
     }
 
     public ArrayList<BuildingInfo> getBuildingInfo() {
-        createTables();
+        createTable();
         ArrayList<BuildingInfo> buildingInfo = new ArrayList<>();
         Cursor c = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 

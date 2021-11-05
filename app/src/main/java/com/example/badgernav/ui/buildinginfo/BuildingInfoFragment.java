@@ -72,7 +72,7 @@ public class BuildingInfoFragment extends Fragment {
         String[] locations = getResources().getStringArray(R.array.building_array);
 
         BuildingInfoDBHelper dbHelper = new BuildingInfoDBHelper(sqLiteDatabase);
-        dbHelper.createTables();
+        dbHelper.createTable();
         dbHelper.populateBuildingTable(locations);
         buildingInfos = dbHelper.getBuildingInfo();
 
@@ -85,8 +85,6 @@ public class BuildingInfoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String buildingName = autoCompleteTextView.getText().toString();
-
-
 
                 BuildingInfo selected = buildingInfos.stream().filter(b -> buildingName.equals(b.getName())).findFirst().orElse(null);
                 if (selected != null) {
