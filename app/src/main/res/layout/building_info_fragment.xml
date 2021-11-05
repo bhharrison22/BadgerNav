@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Bascom Hall"
+            android:text="Select Building"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,23 +37,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="7:00am - 6:00PM"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buildingName" />
 
+        <TextView
+            android:id="@+id/addrText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hoursText" />
+
         <AutoCompleteTextView
             android:id="@+id/buildingDropDownList"
             android:layout_width="231dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:hint="Bascom Hall"
+            android:layout_marginTop="8dp"
+            android:hint="Select Building"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hoursText" />
+            app:layout_constraintTop_toBottomOf="@+id/addrText" />
 
         <ProgressBar
             android:id="@+id/capacityBar"

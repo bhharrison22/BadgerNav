@@ -32,6 +32,7 @@
 
     <string-array name="building_array">
         <item>Erickson Hall</item>
+        <item>Ben\'s House</item>
         <item>1410 Engineering Dr.</item>
         <item>1433 Monroe St.</item>
         <item>1610 University Ave.</item>
