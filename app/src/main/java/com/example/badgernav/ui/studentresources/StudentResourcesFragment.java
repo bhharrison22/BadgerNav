@@ -8,9 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.badgernav.R;
 
@@ -31,8 +34,21 @@ public class StudentResourcesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        hyperlink(getView().findViewById(R.id.canvas), "https://canvas.wisc.edu", "Canvas");
+        hyperlink(getView().findViewById(R.id.myuw), "https://my.wisc.edu", "My UW");
+        hyperlink(getView().findViewById(R.id.recwell), "https://recwell.wisc.edu", "RecWell");
+        hyperlink(getView().findViewById(R.id.libraries), "https://library.wisc.edu", "Libraries");
+        hyperlink(getView().findViewById(R.id.guts), "https://guts.wisc.edu", "GUTS Tutoring");
+        hyperlink(getView().findViewById(R.id.doit), "https://kb.wisc.edu/helpdesk/", "DoIT Help Desk");
+        hyperlink(getView().findViewById(R.id.myuhs), "https://www.uhs.wisc.edu/", "My UHS");
         mViewModel = new ViewModelProvider(this).get(StudentResourcesViewModel.class);
-        // TODO: Use the ViewModel
+    }
+
+    private void hyperlink(TextView view, String link, String label){
+        view.setClickable(true);
+        view.setMovementMethod(LinkMovementMethod.getInstance());
+        String text = "<a href='" + link + "'> " + label + " </a>";
+        view.setText(Html.fromHtml(text));
     }
 
 }

@@ -18,18 +18,13 @@
     <string name="maps">Maps</string>
     <string name="calendar_and_events">Calendar and Events</string>
     <string name="menu_calendar">Calendar</string>
-
-    <string-array name="test_array">
-        <item>United States</item>
-        <item>Israel</item>
-        <item>Canada</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="methods_array">
+        <item>Walking</item>
+        <item>Biking</item>
+        <item>Driving</item>
+        <item>Bus</item>
     </string-array>
-
     <string-array name="building_array">
         <item>Erickson Hall</item>
         <item>Ben\'s House</item>
@@ -252,6 +247,4 @@
         <item>Zoe Bayliss Co-Op</item>
         <item>1220 Capitol Court</item>
     </string-array>
-
-
 </resources>

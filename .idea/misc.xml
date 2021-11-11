@@ -28,10 +28,14 @@
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/menu/nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/School/CS 407/Final Project/BadgerNav/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3828125" />
+        <entry key="..\:/Users/brand/Desktop/Code/CS407/BadgerNav/app/src/main/res/layout/fragment_route_create_edit.xml" value="0.3875" />
+        <entry key="..\:/Users/brand/Desktop/Code/CS407/BadgerNav/app/src/main/res/layout/route_create_edit_fragment.xml" value="0.3875" />
+        <entry key="..\:/Users/brand/Desktop/Code/CS407/BadgerNav/app/src/main/res/layout/route_planner_fragment.xml" value="0.3875" />
+        <entry key="..\:/Users/brand/Desktop/Code/CS407/BadgerNav/app/src/main/res/layout/student_resources_fragment.xml" value="0.33" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
