@@ -19,15 +19,15 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyBespvFJ6HR8GWm7af69w8ArkPNZZ0_bhM"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC1Z-eps9NqIoBTu-AmjEfPvVp0P_MvfHk" />
     </application>
 
 </manifest>
