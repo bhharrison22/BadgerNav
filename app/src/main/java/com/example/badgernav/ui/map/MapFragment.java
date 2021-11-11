@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,16 +31,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "MapFragment.java";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
-//    private MapViewModel mViewModel;
     private MapView mMapView;
     private boolean mLocationPermissionGranted = false;
+    BottomNavigationView bottomNavigationView;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -56,6 +58,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         initGoogleMap(savedInstanceState);
+
+        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         return view;
     }
 
@@ -98,12 +103,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
     }
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -168,5 +167,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.directions:
+                Log.d(TAG, "onNavigationItemSelected: directions selected");
+                return true;
+            case R.id.food:
+                Log.d(TAG, "onNavigationItemSelected: food selected");
+                return true;
+            case R.id.study:
+                Log.d(TAG, "onNavigationItemSelected: study selected");
+                return true;
+            case R.id.fitness:
+                Log.d(TAG, "onNavigationItemSelected: fitness selected");
+                return true;
+            default:
+                return false;
+        }
     }
 }
