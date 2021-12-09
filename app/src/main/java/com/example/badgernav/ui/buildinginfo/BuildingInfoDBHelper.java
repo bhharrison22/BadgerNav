@@ -28,7 +28,7 @@ public class BuildingInfoDBHelper {
         if (count == 0) {
             for (String building : buildings) {
                 building = building.replace("'", "\'\'");
-                sqLiteDatabase.execSQL(String.format("INSERT INTO " + TABLE_NAME + " (name, address, hours, floormap) VALUES ('%s', '%s', '%s', '%s')", building, "Unknown Address", "12:00am - 11:59PM", "¯\\_(ツ)_/¯"));
+                sqLiteDatabase.execSQL(String.format("INSERT INTO " + TABLE_NAME + " (name, address, hours, floormap) VALUES ('%s', '%s', '%s', '%s')", building, "Unknown Address", "Today: 12:00 AM – 11:59 PM", "¯\\_(ツ)_/¯"));
             }
         }
     }

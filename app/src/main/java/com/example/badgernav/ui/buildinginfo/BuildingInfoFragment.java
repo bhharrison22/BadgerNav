@@ -37,7 +37,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BuildingInfoFragment extends Fragment {
 
@@ -105,6 +110,13 @@ public class BuildingInfoFragment extends Fragment {
                     TextView buildingNameView = getView().findViewById(R.id.buildingName);
                     buildingNameView.setText(selected.getName());
 
+                    try {
+                        getPlaceInfo(selected.getName());
+                    }
+                    catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+
                     updateCapacity(selected.getCapacity());
 
                     TextView hoursNameView = getView().findViewById(R.id.hoursText);
@@ -112,25 +124,25 @@ public class BuildingInfoFragment extends Fragment {
 
                     TextView addrNameView = getView().findViewById(R.id.addrText);
                     addrNameView.setText(selected.getAddress());
+
                 }
             }
         });
 
     }
 
+    // -1 indicates closed
     private void updateCapacity(int capacity) {
         ProgressBar progressBar = (ProgressBar) getView().findViewById(R.id.capacityBar);
         TextView capacityText = getView().findViewById(R.id.capacityText);
 
-        capacityText.setText(capacity + "%");
+        if (capacity >= 0)
+            capacityText.setText(capacity + "%");
+        else
+            capacityText.setText("CLOSED");
         progressBar.setProgress(capacity);
 
-        try {
-            getPlaceInfo("Nicholas Recreation Center");
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
+
     }
 
     private void getPlaceInfo(String name) {
@@ -180,15 +192,50 @@ public class BuildingInfoFragment extends Fragment {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject json = new JSONObject(response);
-                            //JSONObject candidate = (JSONObject)(json.getJSONArray("candidates").get(0));
-                            //String placeID = candidate.getString("place_id");
-                            //getPlaceInfo(placeID);
-                            String test = json.getJSONObject("result").getString("formatted_address");
-                            String tester = "";
+                            String address = json.getJSONObject("result").getString("formatted_address"); // get address
+
+                            // get today's hours
+                            JSONArray jsonHours = json.getJSONObject("result").getJSONObject("opening_hours").getJSONArray("weekday_text");
+                            //Get Day of week and convert to JSONArray index
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(new Date());
+                            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1 ;
+                            if (dayOfWeek == -1)
+                                dayOfWeek = 6;
+                            String hours = jsonHours.getString(dayOfWeek);
+
+
+                            TextView hoursNameView = getView().findViewById(R.id.hoursText);
+                            hoursNameView.setText(hours);
+
+                            TextView addrNameView = getView().findViewById(R.id.addrText);
+                            addrNameView.setText(address);
+
+                            try {
+                                Date now = new Date();
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy h:ms a");
+
+                                String opening = hours.substring(hours.indexOf(": ") + 2, hours.indexOf(" – "));
+                                Date openingDate = formatter.parse(now.getDay() + "-" + now.getMonth() + "-" + now.getYear() + " " + opening);
+
+                                String closing = hours.substring(hours.indexOf(" – ") + 3, hours.indexOf("PM") + 2);
+                                Date closingDate = formatter.parse(now.getDay() + "-" + now.getMonth() + "-" + now.getYear() + " " + closing);
+
+                                if(isAfterHours(openingDate, closingDate, now)) {
+                                    updateCapacity(-1);
+                                }
+
+                                System.out.println("debug");
+                            }
+                            catch (Exception e) {
+                                StackTraceElement[] err = e.getStackTrace();
+                                System.err.println("String Parsing went wrong");
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -205,7 +252,9 @@ public class BuildingInfoFragment extends Fragment {
         queue.add(stringRequest);
     }
 
-
+    private boolean isAfterHours(Date openingTime, Date ClosingTime, Date now) {
+        return (now.compareTo(ClosingTime) > 0 || now.compareTo(openingTime) < 0);
+    }
 
 
 

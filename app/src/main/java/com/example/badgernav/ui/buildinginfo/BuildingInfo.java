@@ -24,4 +24,6 @@ public class BuildingInfo {
     public String getFloormap() {return floormap;}
     public int getCapacity() {return capacity;}
 
+
+
 }
