@@ -23,9 +23,11 @@ import android.view.ViewGroup;
 import com.example.badgernav.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -149,6 +151,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
             return;
         }
         map.setMyLocationEnabled(true);
+        LatLng start = new LatLng(43.0722515,-89.4035545);
+        CameraPosition.Builder camBuilder = CameraPosition.builder();
+        camBuilder.target(start);
+        camBuilder.zoom(16);
+
+        CameraPosition cp = camBuilder.build();
+
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
     }
 
     @Override
