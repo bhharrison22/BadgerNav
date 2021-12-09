@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.badgernav.R;
 import com.google.gson.JsonArray;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,10 +45,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.Random;
 
 public class BuildingInfoFragment extends Fragment {
 
     private final String API_KEY = "AIzaSyACtAHIOxePNulTCT-WirMIcT8KW-kXLnw";
+    private final String SEARCH_API_KEY = "AIzaSyACtAHIOxePNulTCT-WirMIcT8KW-kXLnw";
     private BuildingInfoViewModel mViewModel;
     SQLiteDatabase sqLiteDatabase;
     private ArrayList<BuildingInfo> buildingInfos;
@@ -112,6 +117,7 @@ public class BuildingInfoFragment extends Fragment {
 
                     try {
                         getPlaceInfo(selected.getName());
+                        imageSearch(selected.getName());
                     }
                     catch (Exception ex) {
                         System.out.println(ex);
@@ -124,7 +130,6 @@ public class BuildingInfoFragment extends Fragment {
 
                     TextView addrNameView = getView().findViewById(R.id.addrText);
                     addrNameView.setText(selected.getAddress());
-
                 }
             }
         });
@@ -216,6 +221,7 @@ public class BuildingInfoFragment extends Fragment {
                             TextView addrNameView = getView().findViewById(R.id.addrText);
                             addrNameView.setText(address);
 
+                            // Set as closed if its after hours
                             try {
                                 Date now = new Date();
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy h:ms a");
@@ -229,8 +235,6 @@ public class BuildingInfoFragment extends Fragment {
                                 if(isAfterHours(openingDate, closingDate, now)) {
                                     updateCapacity(-1);
                                 }
-
-                                System.out.println("debug");
                             }
                             catch (Exception e) {
                                 StackTraceElement[] err = e.getStackTrace();
@@ -256,7 +260,54 @@ public class BuildingInfoFragment extends Fragment {
         return (now.compareTo(ClosingTime) > 0 || now.compareTo(openingTime) < 0);
     }
 
+    private void imageSearch(String subject) {
+        String encodedSubject = URLEncoder.encode(subject + " UW Madison") + "\n";
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://www.googleapis.com/customsearch/v1?key=" + SEARCH_API_KEY + "&cx=c37c32ed9f1ec39c1&q="+encodedSubject+"&searchType=image";
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            Random rand = new Random();
+                            int index = rand.nextInt(5 + 1 - 1) + 1; // gets random image from top 5 results
+
+                            JSONObject values = (JSONObject) json.getJSONArray("items").get(index);
+                            String imgURL = values.getString("link");
+                            setBuildingImage(imgURL);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error!");
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void setBuildingImage(String url) {
+        ImageView buildingImage = getView().findViewById(R.id.buildingMapImage);
+        try {
+            if (!url.contains("https"))
+                Picasso.get().load(url.replace("http", "https")).into(buildingImage);
+            else
+                Picasso.get().load(url).into(buildingImage);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 

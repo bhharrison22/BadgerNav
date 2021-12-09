@@ -94,9 +94,10 @@
             android:id="@+id/buildingMapImage"
             android:layout_width="230dp"
             android:layout_height="209dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/buckytemp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.519"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/capacityBar" />
 
