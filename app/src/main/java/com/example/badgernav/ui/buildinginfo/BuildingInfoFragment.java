@@ -22,12 +22,26 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.badgernav.R;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.badgernav.R;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class BuildingInfoFragment extends Fragment {
 
+    private final String API_KEY = "AIzaSyACtAHIOxePNulTCT-WirMIcT8KW-kXLnw";
     private BuildingInfoViewModel mViewModel;
     SQLiteDatabase sqLiteDatabase;
     private ArrayList<BuildingInfo> buildingInfos;
@@ -110,7 +124,90 @@ public class BuildingInfoFragment extends Fragment {
 
         capacityText.setText(capacity + "%");
         progressBar.setProgress(capacity);
+
+        try {
+            getPlaceInfo("Nicholas Recreation Center");
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
+
+    private void getPlaceInfo(String name) {
+
+        String encodedName = URLEncoder.encode(name) + "\n";
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://maps.googleapis.com/maps/api/place/findplacefromtext/json\n" +
+                "?input=" + encodedName +
+                "&inputtype=textquery\n" +
+                "&key=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            JSONObject candidate = (JSONObject)(json.getJSONArray("candidates").get(0));
+                            String placeID = candidate.getString("place_id");
+                            getPlaceDetails(placeID);
+                            String tester = "";
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error!");
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void getPlaceDetails(String placeID) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://maps.googleapis.com/maps/api/place/details/json\n" +
+                "?placeid=" + placeID + "\n" +
+                "&key=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            //JSONObject candidate = (JSONObject)(json.getJSONArray("candidates").get(0));
+                            //String placeID = candidate.getString("place_id");
+                            //getPlaceInfo(placeID);
+                            String test = json.getJSONObject("result").getString("formatted_address");
+                            String tester = "";
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error!");
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+
+
+
 
 
 
