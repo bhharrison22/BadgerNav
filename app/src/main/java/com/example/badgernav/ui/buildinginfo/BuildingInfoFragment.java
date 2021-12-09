@@ -32,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.badgernav.R;
 import com.google.gson.JsonArray;
+import com.google.type.DateTime;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -222,15 +224,27 @@ public class BuildingInfoFragment extends Fragment {
                             addrNameView.setText(address);
 
                             // Set as closed if its after hours
+                            // This code is really fucking stupid and breaks if somewhere opens at noon,
+                            // but Java's string conversions to DateTime is super broken and I wasted too much time trying to do it properly
                             try {
-                                Date now = new Date();
-                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy h:ms a");
+                                LocalDateTime now = LocalDateTime.now();
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy KK:mm a");
 
-                                String opening = hours.substring(hours.indexOf(": ") + 2, hours.indexOf(" – "));
-                                Date openingDate = formatter.parse(now.getDay() + "-" + now.getMonth() + "-" + now.getYear() + " " + opening);
+                                int day = now.getDayOfMonth();
+                                int month = now.getMonthValue();
+                                int year = now.getYear();
 
-                                String closing = hours.substring(hours.indexOf(" – ") + 3, hours.indexOf("PM") + 2);
-                                Date closingDate = formatter.parse(now.getDay() + "-" + now.getMonth() + "-" + now.getYear() + " " + closing);
+                                String opening = hours.substring(hours.indexOf(": ") + 2, hours.indexOf(" – ") - 3);
+                                String closing = hours.substring(hours.indexOf(" – ") + 3, hours.indexOf("PM")-1);
+
+                                int openingHour = Character.getNumericValue(opening.charAt(0));
+                                int openingMinute = Integer.parseInt(opening.substring(opening.indexOf(":") + 1));
+
+                                int closingHour = Character.getNumericValue(closing.charAt(0)) + 12;
+                                int closingMinute = Integer.parseInt(closing.substring(opening.indexOf(":") + 1));
+
+                                LocalDateTime openingDate = LocalDateTime.of(year, month, day, openingHour, openingMinute);
+                                LocalDateTime closingDate = LocalDateTime.of(year, month, day, closingHour, closingMinute);
 
                                 if(isAfterHours(openingDate, closingDate, now)) {
                                     updateCapacity(-1);
@@ -256,7 +270,8 @@ public class BuildingInfoFragment extends Fragment {
         queue.add(stringRequest);
     }
 
-    private boolean isAfterHours(Date openingTime, Date ClosingTime, Date now) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean isAfterHours(LocalDateTime openingTime, LocalDateTime ClosingTime, LocalDateTime now) {
         return (now.compareTo(ClosingTime) > 0 || now.compareTo(openingTime) < 0);
     }
 
@@ -299,9 +314,9 @@ public class BuildingInfoFragment extends Fragment {
         ImageView buildingImage = getView().findViewById(R.id.buildingMapImage);
         try {
             if (!url.contains("https"))
-                Picasso.get().load(url.replace("http", "https")).into(buildingImage);
+                Picasso.get().load(url.replace("http", "https")).resize(230,200).into(buildingImage);
             else
-                Picasso.get().load(url).into(buildingImage);
+                Picasso.get().load(url).resize(230,200).into(buildingImage);
         }
         catch (Exception e) {
             e.printStackTrace();
