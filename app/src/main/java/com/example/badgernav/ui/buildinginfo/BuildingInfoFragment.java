@@ -228,7 +228,7 @@ public class BuildingInfoFragment extends Fragment {
                             // but Java's string conversions to DateTime is super broken and I wasted too much time trying to do it properly
                             try {
                                 LocalDateTime now = LocalDateTime.now();
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy KK:mm a");
+                                //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy KK:mm a");
 
                                 int day = now.getDayOfMonth();
                                 int month = now.getMonthValue();
