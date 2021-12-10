@@ -10,6 +10,11 @@ public class Event {
         this.time = time;
         this.title = title;
     }
+    public Event(String title, String building){
+        this.building = building;
+        this.time = "0:00";
+        this.title = title;
+    }
 
     public String getBuilding() {
         return building;
