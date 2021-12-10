@@ -12,6 +12,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +23,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.badgernav.Event;
 import com.example.badgernav.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+
 public class RoutePlannerFragment extends Fragment {
+    
+    private ArrayList<Event> eventList;
+    private RecyclerView recyclerView;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
     private final LatLng mDestinationLatLng = new LatLng(-33.8523341, 151.2106085);
@@ -52,13 +59,18 @@ public class RoutePlannerFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 //        mapFragment.getMapAsync(googleMap -> {
 //            mMap = googleMap;
 //            googleMap.addMarker(new MarkerOptions().position(mDestinationLatLng).title("Destination"));
 //            displayMyLocation();
 //        });
+        eventList = new ArrayList<>();
+        recyclerView = getView().findViewById(R.id.recyclerView);
+        createEvent();
+        setAdapter();
+        
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
         // Creates the spinner
         Spinner spinner = (Spinner) getView().findViewById(R.id.methodSpinner);
@@ -68,6 +80,21 @@ public class RoutePlannerFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(RoutePlannerViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    private void setAdapter() {
+        RecyclerAdapter adapter = new RecyclerAdapter(eventList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void createEvent() {
+        eventList.add(new Event("stealthy", "mom", "sex"));
+        eventList.add(new Event("stealthy", "mom", "sex"));
+        eventList.add(new Event("stealthy", "mom", "sex"));
+        eventList.add(new Event("stealthy", "mom", "sex"));
     }
 
     // TODO: decide what to do when a method is selected
