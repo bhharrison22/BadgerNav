@@ -1,6 +1,8 @@
 package com.example.badgernav.ui.routeplanner;
 
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -21,9 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.badgernav.Event;
+import com.example.badgernav.MainActivity;
+import com.example.badgernav.NavMenuActivity;
 import com.example.badgernav.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,8 +39,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 public class RoutePlannerFragment extends Fragment {
+    private ImageButton button;
     
-    private ArrayList<Event> eventList;
+    private static ArrayList<Event> eventList;
     private RecyclerView recyclerView;
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
@@ -66,9 +72,20 @@ public class RoutePlannerFragment extends Fragment {
 //            googleMap.addMarker(new MarkerOptions().position(mDestinationLatLng).title("Destination"));
 //            displayMyLocation();
 //        });
+        button = getView().findViewById(R.id.imageButton2);
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Intent intent = new Intent(getContext(), CreateEdit.class);
+                //startActivity(intent);
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setReorderingAllowed(true);
+                ft.replace(R.id.nav_host_fragment_content_nav_menu, RouteCreateEdit.class, null);
+                ft.commit();
+            }
+        });
         eventList = new ArrayList<>();
         recyclerView = getView().findViewById(R.id.recyclerView);
-        createEvent();
         setAdapter();
         
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
@@ -90,11 +107,8 @@ public class RoutePlannerFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void createEvent() {
-        eventList.add(new Event("stealthy", "mom", "sex"));
-        eventList.add(new Event("stealthy", "mom", "sex"));
-        eventList.add(new Event("stealthy", "mom", "sex"));
-        eventList.add(new Event("stealthy", "mom", "sex"));
+    public static void createEvent(Event event) {
+        eventList.add(event);
     }
 
     // TODO: decide what to do when a method is selected
