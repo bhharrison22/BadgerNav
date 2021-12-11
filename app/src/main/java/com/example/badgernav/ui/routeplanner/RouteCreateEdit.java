@@ -100,6 +100,7 @@ public class RouteCreateEdit extends Fragment {
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        RoutePlannerFragment.removeEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString()));
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.setReorderingAllowed(true);

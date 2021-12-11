@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -27,9 +29,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.badgernav.Event;
+import com.example.badgernav.EventDBHelper;
 import com.example.badgernav.MainActivity;
 import com.example.badgernav.NavMenuActivity;
 import com.example.badgernav.R;
+import com.example.badgernav.ui.buildinginfo.BuildingInfo;
+import com.example.badgernav.ui.buildinginfo.BuildingInfoDBHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,7 +45,9 @@ import java.util.ArrayList;
 
 public class RoutePlannerFragment extends Fragment {
     private ImageButton button;
-    
+
+    SQLiteDatabase sqLiteDatabase;
+    static EventDBHelper dbHelper;
     private static ArrayList<Event> eventList;
     private RecyclerView recyclerView;
 
@@ -58,6 +65,8 @@ public class RoutePlannerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        sqLiteDatabase = getContext().openOrCreateDatabase("BadgerNav", Context.MODE_PRIVATE,null);
         return inflater.inflate(R.layout.route_planner_fragment, container, false);
     }
 
@@ -84,7 +93,11 @@ public class RoutePlannerFragment extends Fragment {
                 ft.commit();
             }
         });
-        eventList = new ArrayList<>();
+
+        dbHelper = new EventDBHelper(sqLiteDatabase);
+        dbHelper.createTable();
+        eventList = dbHelper.getEvents();
+        System.out.println(eventList.get(0).getTime());
         recyclerView = getView().findViewById(R.id.recyclerView);
         setAdapter();
         
@@ -107,20 +120,14 @@ public class RoutePlannerFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public static void createEvent(Event event) {
-        eventList.add(event);
-    }
+    public static void createEvent(Event event) { dbHelper.addEvent(event);}
+    public static void removeEvent(Event event){ dbHelper.removeEvent(event);}
 
     // TODO: decide what to do when a method is selected
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
-    }
-
-    public void onClick(View view){
-        Intent intent = new Intent(getContext(), RouteCreateEdit.class);
-        startActivity(intent);
     }
 
     private void displayMyLocation(){
