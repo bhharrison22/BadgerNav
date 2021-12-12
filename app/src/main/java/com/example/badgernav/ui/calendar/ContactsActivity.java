@@ -46,19 +46,13 @@ public class ContactsActivity extends AppCompatActivity {
                 final Contact contact = Data.getContactById(ContactsActivity.this, currMeeting.getContactId());
                 colder.contactName.setText(contact.getName());
                 colder.contactNumber.setText(contact.getPhone());
-                colder.parent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openContactInSystemViewer(contact.getContactId());
-                        notifyDataSetChanged();
-                    }
+                colder.parent.setOnClickListener(view -> {
+                    openContactInSystemViewer(contact.getContactId());
+                    notifyDataSetChanged();
                 });
-                colder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        data.removeContact(contact);
-                        notifyDataSetChanged();
-                    }
+                colder.deleteBtn.setOnClickListener(view -> {
+                    data.removeContact(contact);
+                    notifyDataSetChanged();
                 });
             }
 

@@ -33,7 +33,7 @@ public class MainCalendarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_calendar);
 
         data = new Data(MainCalendarActivity.this);
 
@@ -47,14 +47,11 @@ public class MainCalendarActivity extends AppCompatActivity {
         meetingsAdapter = new MeetingsAdapter(data, this);
         meetingsRecyclerList.setAdapter(meetingsAdapter);
 
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addMeetingIntent = new Intent(MainCalendarActivity.this, MeetingActivity.class);
-                Log.e("START", "Curr date on cal "+ currentDateOnCalender + "");
-                addMeetingIntent.putExtra("date", currentDateOnCalender.getTime());
-                startActivityForResult(addMeetingIntent, MeetingActivity.EDIT_MEETING);
-            }
+        findViewById(R.id.button).setOnClickListener(view -> {
+            Intent addMeetingIntent = new Intent(MainCalendarActivity.this, MeetingActivity.class);
+            Log.e("START", "Curr date on cal "+ currentDateOnCalender + "");
+            addMeetingIntent.putExtra("date", currentDateOnCalender.getTime());
+            startActivityForResult(addMeetingIntent, MeetingActivity.EDIT_MEETING);
         });
 
         meetingsRecyclerList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -82,19 +79,15 @@ public class MainCalendarActivity extends AppCompatActivity {
 
         currDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(new Date(calender.getDate())));
 
-        calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                Calendar cal = Calendar.getInstance();
-                cal.set(year, month, day, 0, 0);
-                Date date = cal.getTime();
-                int scrollToIndex = data.getIndexForDate(date);
-                layoutManager.scrollToPositionWithOffset(scrollToIndex, 0);
-                setCalenderListTime(date);
-                currDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(date));
-                updateStoredDateOnCalender(date);
-            }
+        calender.setOnDateChangeListener((calendarView, year, month, day) -> {
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, day, 0, 0);
+            Date date = cal.getTime();
+            int scrollToIndex = data.getIndexForDate(date);
+            layoutManager.scrollToPositionWithOffset(scrollToIndex, 0);
+            setCalenderListTime(date);
+            currDate.setText(DateFormat.getDateInstance(DateFormat.FULL).format(date));
+            updateStoredDateOnCalender(date);
         });
     }
 
@@ -145,6 +138,7 @@ public class MainCalendarActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MeetingActivity.EDIT_MEETING) {
             meetingsAdapter.notifyDataSetChanged();
         }

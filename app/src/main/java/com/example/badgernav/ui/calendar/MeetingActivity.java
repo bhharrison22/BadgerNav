@@ -1,9 +1,5 @@
 package com.example.badgernav.ui.calendar;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -12,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.badgernav.R;
 
-
-import java.io.ObjectInputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -71,9 +68,9 @@ public class MeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meeting);
         data = new Data(this);
 
-        String meetingId = null;
+        String meetingId;
         Intent intent = getIntent();
-        Date meetingStartDate = new Date();
+        Date meetingStartDate;
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
@@ -108,33 +105,27 @@ public class MeetingActivity extends AppCompatActivity {
         contactPhone = findViewById(R.id.meeting_contact_number);
         doneBtn = findViewById(R.id.done_btn);
 
-        editMeetingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                meeting.setTitle(titleEditText.getText().toString());
-                titleEditText.setEnabled(!titleEditText.isEnabled());
-                if (titleEditText.isEnabled()) {
-                    titleEditText.requestFocus();
-                    titleEditText.setFocusableInTouchMode(true);
-                    editMeetingBtn.setText(R.string.title_edit_done);
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(titleEditText, InputMethodManager.SHOW_FORCED);
-                } else {
-                    editMeetingBtn.setText(R.string.title_edit);
-                }
+        editMeetingBtn.setOnClickListener(view -> {
+            meeting.setTitle(titleEditText.getText().toString());
+            titleEditText.setEnabled(!titleEditText.isEnabled());
+            if (titleEditText.isEnabled()) {
+                titleEditText.requestFocus();
+                titleEditText.setFocusableInTouchMode(true);
+                editMeetingBtn.setText(R.string.title_edit_done);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(titleEditText, InputMethodManager.SHOW_FORCED);
+            } else {
+                editMeetingBtn.setText(R.string.title_edit);
             }
         });
 
 
-        doneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                data.addOrUpdateMeeting(meeting);
-                Log.e("MEETINGS", "Add meeting: " + meeting);
-                Log.e("MEETINGS", data.getMeetingList().toString());
-                finishActivity(EDIT_MEETING);
-                finish();
-            }
+        doneBtn.setOnClickListener(view -> {
+            data.addOrUpdateMeeting(meeting);
+            Log.e("MEETINGS", "Add meeting: " + meeting);
+            Log.e("MEETINGS", data.getMeetingList().toString());
+            finishActivity(EDIT_MEETING);
+            finish();
         });
 
         updateMeetingViews();
@@ -214,6 +205,7 @@ public class MeetingActivity extends AppCompatActivity {
                         }
                     }, 0, 0, true).show();
                 } else if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    //todo check case
                 }
                 updateMeetingViews();
             }
@@ -264,6 +256,7 @@ public class MeetingActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_CONTACT_REQUEST) {
             if (resultCode == RESULT_OK) { //User picked a contact; didn't cancel out
                 // The Intent's data Uri identifies which contact was selected.

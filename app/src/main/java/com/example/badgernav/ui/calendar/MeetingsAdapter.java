@@ -1,9 +1,7 @@
 package com.example.badgernav.ui.calendar;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
-import java.util.Date;
 import com.example.badgernav.R;
+
+import java.util.Date;
 
 
 public class MeetingsAdapter extends RecyclerView.Adapter {
@@ -55,13 +53,10 @@ public class MeetingsAdapter extends RecyclerView.Adapter {
 
         mHolder.updateView(currMeeting.getMeetingId());
 
-        mHolder.parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editMeetingIntent = new Intent(activity, MeetingActivity.class);
-                editMeetingIntent.putExtra("meeting_id", currMeeting.getMeetingId());
-                activity.startActivityForResult(editMeetingIntent, MeetingActivity.EDIT_MEETING);
-            }
+        mHolder.parent.setOnClickListener(view -> {
+            Intent editMeetingIntent = new Intent(activity, MeetingActivity.class);
+            editMeetingIntent.putExtra("meeting_id", currMeeting.getMeetingId());
+            activity.startActivityForResult(editMeetingIntent, MeetingActivity.EDIT_MEETING);
         });
     }
 
@@ -100,6 +95,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter {
         }
 
 
+        @NonNull
         @Override
         public String toString() {
             return super.toString();

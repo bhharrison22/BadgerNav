@@ -16,12 +16,6 @@ import com.example.badgernav.R;
 
 public class CalendarFragment extends Fragment {
 
-    private CalendarViewModel mViewModel;
-
-    public static CalendarFragment newInstance() {
-        return new CalendarFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -31,7 +25,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
+        CalendarViewModel mViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
         // TODO: Use the ViewModel
     }
 
