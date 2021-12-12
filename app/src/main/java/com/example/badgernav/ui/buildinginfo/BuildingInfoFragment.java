@@ -155,6 +155,9 @@ public class BuildingInfoFragment extends Fragment {
     private void getPlaceInfo(String name) {
 
         String encodedName = URLEncoder.encode(name) + "\n";
+        if (name.equals("Ben's House")){
+            encodedName = URLEncoder.encode("107 N Randall Ave, Madison WI");
+        }
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -205,29 +208,26 @@ public class BuildingInfoFragment extends Fragment {
                         try {
                             JSONObject json = new JSONObject(response);
                             String address = json.getJSONObject("result").getString("formatted_address"); // get address
-
-                            // get today's hours
-                            JSONArray jsonHours = json.getJSONObject("result").getJSONObject("opening_hours").getJSONArray("weekday_text");
-                            //Get Day of week and convert to JSONArray index
-                            Calendar c = Calendar.getInstance();
-                            c.setTime(new Date());
-                            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1 ;
-                            if (dayOfWeek == -1)
-                                dayOfWeek = 6;
-                            String hours = jsonHours.getString(dayOfWeek);
-
-
-                            TextView hoursNameView = getView().findViewById(R.id.hoursText);
-                            hoursNameView.setText(hours);
-
                             TextView addrNameView = getView().findViewById(R.id.addrText);
                             addrNameView.setText(address);
 
-                            // Set as closed if its after hours
-                            // This code is really fucking stupid and breaks if somewhere opens at noon,
-                            // but Java's string conversions to DateTime is super broken and I wasted too much time trying to do it properly
                             try {
+                                // get today's hours
+                                JSONArray jsonHours = json.getJSONObject("result").getJSONObject("opening_hours").getJSONArray("weekday_text");
+
+                                //Get Day of week and convert to JSONArray index
                                 LocalDateTime now = LocalDateTime.now();
+                                int dayOfWeek = now.getDayOfWeek().getValue() - 1 ;
+                                if (dayOfWeek == -1)
+                                    dayOfWeek = 6;
+                                String hours = jsonHours.getString(dayOfWeek);
+
+                                // Set as closed if its after hours
+                                // This code is really fucking stupid and breaks if somewhere opens at noon,
+                                // but Java's string conversions to DateTime is super broken and I wasted too much time trying to do it properly
+                                TextView hoursNameView = getView().findViewById(R.id.hoursText);
+                                hoursNameView.setText(hours);
+
                                 //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy KK:mm a");
 
                                 int day = now.getDayOfMonth();
@@ -277,6 +277,9 @@ public class BuildingInfoFragment extends Fragment {
 
     private void imageSearch(String subject) {
         String encodedSubject = URLEncoder.encode(subject + " UW Madison") + "\n";
+        if (subject.equals("Ben's House")) {
+            encodedSubject = URLEncoder.encode("107 N Randall Ave");
+        }
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url ="https://www.googleapis.com/customsearch/v1?key=" + SEARCH_API_KEY + "&cx=c37c32ed9f1ec39c1&q="+encodedSubject+"&searchType=image";
