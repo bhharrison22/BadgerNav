@@ -34,6 +34,7 @@ public class RouteCreateEdit extends Fragment {
     private Button deleteButton;
     private EditText nameInput;
     private EditText buildingingInput;
+    private EditText timeInput;
 
     public static RouteCreateEdit newInstance() {
         return new RouteCreateEdit();
@@ -56,6 +57,7 @@ public class RouteCreateEdit extends Fragment {
 
         nameInput = getView().findViewById(R.id.name_input);
         buildingingInput = getView().findViewById(R.id.location_input);
+        timeInput = getView().findViewById(R.id.editTextTime);
 
         backButton = getView().findViewById(R.id.imageButton);
         backButton.setOnClickListener(new View.OnClickListener(){
@@ -78,7 +80,7 @@ public class RouteCreateEdit extends Fragment {
         saveButton = getView().findViewById(R.id.button2);
         saveButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                RoutePlannerFragment.createEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString()));
+                RoutePlannerFragment.createEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(), timeInput.getText().toString()));
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.setReorderingAllowed(true);
@@ -100,7 +102,7 @@ public class RouteCreateEdit extends Fragment {
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        RoutePlannerFragment.removeEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString()));
+                        RoutePlannerFragment.removeEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(), timeInput.getText().toString()));
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.setReorderingAllowed(true);
