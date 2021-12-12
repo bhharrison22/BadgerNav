@@ -29,7 +29,7 @@ public class EventDBHelper {
     }
 
     public void removeEvent(Event event){
-        sqLiteDatabase.execSQL(String.format("DELETE FROM " + TABLE_NAME + " WHERE name = 's' AND address = 's' AND hours = 's'", event.getTitle(), event.getBuilding(), event.getTime()));
+        sqLiteDatabase.execSQL(String.format("DELETE FROM " + TABLE_NAME + " WHERE name = '%s' AND address = '%s' AND hours = '%s'", event.getTitle(), event.getBuilding(), event.getTime()));
     }
 
     public ArrayList<Event> getEvents() {

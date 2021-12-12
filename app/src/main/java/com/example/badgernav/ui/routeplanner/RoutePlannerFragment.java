@@ -97,7 +97,6 @@ public class RoutePlannerFragment extends Fragment {
         dbHelper = new EventDBHelper(sqLiteDatabase);
         dbHelper.createTable();
         eventList = dbHelper.getEvents();
-        System.out.println(eventList.get(0).getTime());
         recyclerView = getView().findViewById(R.id.recyclerView);
         setAdapter();
         
