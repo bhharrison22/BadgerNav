@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/space2"
+    android:layout_marginTop="@dimen/space3"
+    android:layout_marginRight="@dimen/space2"
+    android:layout_marginBottom="@dimen/space3"
+    android:clickable="true"
+    android:elevation="@dimen/space1"
+    android:focusable="false"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:onClick="setStartDate"
+    app:cardCornerRadius="8dip"
+    app:contentPadding="@dimen/space2"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toRightOf="@id/start_text"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:id="@+id/dates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/meeting_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/listItemTitle"
+            android:textSize="@dimen/text2" />
+
+
+        <TextView
+            android:id="@+id/meeting_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="start"
+            android:textColor="@color/listItemText" />
+
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="-"-->
+        <!--            android:gravity="center"/>-->
+
+        <TextView
+            android:id="@+id/meeting_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="end"
+            android:textColor="@color/listItemText" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

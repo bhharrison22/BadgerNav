@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/space1"
+    android:weightSum="1">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/meeting_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space2"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:inputType="none"
+                android:textSize="@dimen/text1"
+                tools:text="Meeting name" />
+
+            <Button
+                android:id="@+id/edit_meeting_title_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="0"
+                android:textColor="@color/buttonText"
+                android:text="Edit"
+                android:backgroundTint="@color/colorAccent"
+
+                />
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:layout_height="wrap_content"
+                android:text="Start: "
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/start_text"
+                android:paddingRight="@dimen/space2"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="2dp"
+                app:layout_constraintLeft_toRightOf="@id/start_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:elevation="@dimen/space1"
+                app:contentPadding="@dimen/space2"
+                android:layout_gravity="center"
+                app:cardCornerRadius="8dip"
+                android:onClick="setStartDate"
+                >
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="90:90"
+                    android:textSize="@dimen/text4" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space2"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:text="End: "
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/end_text"
+                android:paddingRight="@dimen/space2"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="2dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/end_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:elevation="@dimen/space1"
+                app:contentPadding="@dimen/space2"
+                android:layout_gravity="center"
+                app:cardCornerRadius="8dip"
+                android:onClick="setEndDate"
+                >
+
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="90:90"
+                    android:textSize="@dimen/text4" />
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:id="@+id/contact_constraint"
+            android:layout_marginTop="@dimen/space1"
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:text="Contact"
+                android:textSize="@dimen/text2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageButton
+                android:id="@+id/add_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="pickContactIntent"
+                android:src="@drawable/ic_add_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/buttonText"
+                android:backgroundTint="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/contact_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="openContact"
+            android:clickable="true"
+            android:focusable="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:elevation="@dimen/space1"
+            app:contentPaddingBottom="@dimen/space2"
+            app:contentPaddingLeft="@dimen/space2"
+            app:contentPaddingRight="@dimen/space2"
+            android:layout_gravity="center"
+            app:cardCornerRadius="8dip"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="top"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space2"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/meeting_contact_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="None"
+                        android:textSize="@dimen/text4" />
+
+                    <TextView
+                        android:id="@+id/meeting_contact_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+                <ImageButton
+                    app:layout_constraintRight_toLeftOf="@id/delete_contact_btn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/edit_contact_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_weight="0"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="pickContactIntent"
+                    android:src="@drawable/ic_edit_white_24dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="Edit" />
+
+                <ImageButton
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/delete_contact_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_weight="0"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="deleteContact"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:backgroundTint="@color/colorAccent"
+
+                    android:text="Edit" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <Button
+            android:id="@+id/done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/affirmative"
+            android:text="Done"
+            android:textColor="@color/textLight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/delete_meeting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/negative"
+            android:onClick="deleteMeeting"
+            android:text="Delete"
+            android:textColor="@color/textLight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/cancel_edit_meeting_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/cancel_edit_meeting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/buttonText"
+            android:onClick="cancelEditMeeting"
+            android:text="Cancel"
+            android:backgroundTint="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
