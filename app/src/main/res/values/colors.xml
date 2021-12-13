@@ -13,4 +13,20 @@
     <color name="RedDark">#9a0007</color>
     <color name="RedLight">#ff6659</color>
     <color name="grey">#cccccc</color>
+
+    <color name="colorPrimary">#d32f2f</color>
+    <color name="colorPrimaryDark">#9a0007</color>
+    <color name="colorPrimaryLight">#ff6659</color>
+    <color name="colorAccent">#FFFFFFFF</color>
+    <color name="negative">#FF0000</color>
+    <color name="affirmative">#6D9E1F</color>
+    <color name="listItemBackgroundDisable">#949494</color>
+    <color name="textLight">#FFFFFF</color>
+    <color name="textDark">#000000</color>
+    <color name="listItemBackground">#ffffff</color>
+    <color name="listItemText">#000000</color>
+    <color name="listItemTitle">#0D47A1</color>
+    <color name="grey1">#cccccc</color>
+    <color name="transperent">#00FFFFFF</color>
+    <color name="buttonText">#ffffff</color>
 </resources>
