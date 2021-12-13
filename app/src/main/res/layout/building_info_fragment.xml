@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Select Building"
+            android:textAlignment="center"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textAlignment="center"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
@@ -47,6 +49,7 @@
             android:id="@+id/addrText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,10 +93,11 @@
         <ImageView
             android:id="@+id/buildingMapImage"
             android:layout_width="230dp"
-            android:layout_height="209dp"
-            android:layout_marginTop="44dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/buckytemp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.519"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/capacityBar" />
 

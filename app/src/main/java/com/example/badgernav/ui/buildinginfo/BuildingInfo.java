@@ -15,7 +15,7 @@ public class BuildingInfo {
         this.hours = hours;
         this.floormap = floormap;
         Random rand = new Random();
-        this.capacity = rand.nextInt(75 + 1 - 5) + 5; // random number between 5 and 75
+        this.capacity = rand.nextInt(45 + 1 - 5) + 5; // random number between 5 and 45
     }
 
     public String getName() {return name;}
@@ -23,5 +23,7 @@ public class BuildingInfo {
     public String getHours() {return hours;}
     public String getFloormap() {return floormap;}
     public int getCapacity() {return capacity;}
+
+
 
 }
