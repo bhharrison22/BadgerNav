@@ -101,11 +101,6 @@ public class RoutePlannerFragment extends Fragment {
         setAdapter();
         
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-        // Creates the spinner
-        Spinner spinner = (Spinner) getView().findViewById(R.id.methodSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.methods_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         mViewModel = new ViewModelProvider(this).get(RoutePlannerViewModel.class);
         // TODO: Use the ViewModel
