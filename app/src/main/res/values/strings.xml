@@ -19,6 +19,15 @@
     <string name="calendar_and_events">Calendar and Events</string>
     <string name="menu_calendar">Calendar</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+        <string name="title_meeting_activity"> Meeting</string>
+        <string name="title_edit_meeting_activity">Edit Meeting</string>
+        <string name="title_add_meeting_activity">Add Meeting</string>
+        <string name="title_main_activity">Badger Calendar</string>
+        <string name="title_mass_removal_activity">Remove</string>
+        <string name="title_edit">Edit</string>
+        <string name="title_edit_done">Done</string>
+        <string name="title_contacts_activity">Manage Contacts</string>
     <string-array name="methods_array">
         <item>Walking</item>
         <item>Biking</item>
@@ -249,4 +258,5 @@
         <item>Zoe Bayliss Co-Op</item>
         <item>1220 Capitol Court</item>
     </string-array>
+
 </resources>
