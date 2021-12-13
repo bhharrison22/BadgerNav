@@ -223,7 +223,7 @@ public class BuildingInfoFragment extends Fragment {
                                 String hours = jsonHours.getString(dayOfWeek);
 
                                 // Set as closed if its after hours
-                                // This code is really fucking stupid and breaks if somewhere opens at noon,
+                                // This code is really fucking stupid and breaks if somewhere opens at noon or is closed all day
                                 // but Java's string conversions to DateTime is super broken and I wasted too much time trying to do it properly
                                 TextView hoursNameView = getView().findViewById(R.id.hoursText);
                                 hoursNameView.setText(hours);

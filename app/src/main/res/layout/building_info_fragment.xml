@@ -94,7 +94,7 @@
             android:id="@+id/buildingMapImage"
             android:layout_width="230dp"
             android:layout_height="200dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/buckytemp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.519"
