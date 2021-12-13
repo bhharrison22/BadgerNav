@@ -39,7 +39,7 @@ public class StudentResourcesFragment extends Fragment {
         hyperlink(getView().findViewById(R.id.recwell), "https://recwell.wisc.edu", "RecWell");
         hyperlink(getView().findViewById(R.id.libraries), "https://library.wisc.edu", "Libraries");
         hyperlink(getView().findViewById(R.id.guts), "https://guts.wisc.edu", "GUTS Tutoring");
-        hyperlink(getView().findViewById(R.id.doit), "https://kb.wisc.edu/helpdesk/", "DoIT Help Desk");
+        hyperlink(getView().findViewById(R.id.doit), "https://kb.wisc.edu/helpdesk/", "DoIT");
         hyperlink(getView().findViewById(R.id.myuhs), "https://www.uhs.wisc.edu/", "My UHS");
         mViewModel = new ViewModelProvider(this).get(StudentResourcesViewModel.class);
     }

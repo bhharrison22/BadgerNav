@@ -4,16 +4,21 @@ public class Event {
     private String title;
     private String building;
     private String time;
+    private String method;
 
-    public Event(String title, String building, String time){
+    public Event(String title, String building, String time, String method){
         this.building = building;
         this.time = time;
         this.title = title;
+        this.method = method;
     }
-    public Event(String title, String building){
-        this.building = building;
-        this.time = "0:00";
-        this.title = title;
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getBuilding() {

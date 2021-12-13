@@ -16,22 +16,24 @@ public class EventDBHelper {
     public void createTable() {
         //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); // delete old Building Info Table TODO: remove this line once db is set up
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (id INTEGER PRIMARY KEY, name TEXT, address TEXT, hours TEXT)"); // Create Building Info Table
+                " (id INTEGER PRIMARY KEY, name TEXT, address TEXT, hours TEXT, method TEXT)"); // Create Building Info Table
     }
 
     public void addEvent(Event event) {
-        SQLiteStatement stmt = sqLiteDatabase.compileStatement("INSERT INTO events (name, address, hours) VALUES (?, ?, ?)");
+        SQLiteStatement stmt = sqLiteDatabase.compileStatement("INSERT INTO events (name, address, hours, method) VALUES (?, ?, ?, ?)");
         stmt.bindString(1, event.getTitle());
         stmt.bindString(2, event.getBuilding());
         stmt.bindString(3, event.getTime());
+        stmt.bindString(4, event.getMethod());
         stmt.executeInsert();
     }
 
     public void removeEvent(Event event){
-        SQLiteStatement stmt = sqLiteDatabase.compileStatement("DELETE FROM events WHERE name = ? AND address = ? AND hours = ?");
+        SQLiteStatement stmt = sqLiteDatabase.compileStatement("DELETE FROM events WHERE name = ? AND address = ? AND hours = ? AND method = ?");
         stmt.bindString(1, event.getTitle());
         stmt.bindString(2, event.getBuilding());
         stmt.bindString(3, event.getTime());
+        stmt.bindString(4, event.getMethod());
         stmt.executeUpdateDelete();
     }
 
@@ -43,11 +45,12 @@ public class EventDBHelper {
         int nameIndex = c.getColumnIndex("name");
         int addressIndex = c.getColumnIndex("address");
         int hoursIndex = c.getColumnIndex("hours");
+        int methodIndex = c.getColumnIndex("method");
 
         c.moveToFirst();
 
         while (!c.isAfterLast()) {
-            Event event = new Event(c.getString(nameIndex), c.getString(addressIndex), c.getString(hoursIndex));
+            Event event = new Event(c.getString(nameIndex), c.getString(addressIndex), c.getString(hoursIndex), c.getString(methodIndex));
             events.add(event);
             c.moveToNext();
         }

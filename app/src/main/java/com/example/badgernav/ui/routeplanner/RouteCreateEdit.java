@@ -21,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.badgernav.Event;
@@ -35,6 +36,7 @@ public class RouteCreateEdit extends Fragment {
     private EditText nameInput;
     private EditText buildingingInput;
     private EditText timeInput;
+    private Spinner spinner;
 
     public static RouteCreateEdit newInstance() {
         return new RouteCreateEdit();
@@ -58,6 +60,11 @@ public class RouteCreateEdit extends Fragment {
         nameInput = getView().findViewById(R.id.name_input);
         buildingingInput = getView().findViewById(R.id.location_input);
         timeInput = getView().findViewById(R.id.editTextTime);
+        // Creates the spinner
+        spinner = (Spinner) getView().findViewById(R.id.methodSpinner);
+        ArrayAdapter<CharSequence> arrAdapter = ArrayAdapter.createFromResource(getContext(), R.array.methods_array, android.R.layout.simple_spinner_item);
+        arrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrAdapter);
 
         backButton = getView().findViewById(R.id.imageButton);
         backButton.setOnClickListener(new View.OnClickListener(){
@@ -80,7 +87,8 @@ public class RouteCreateEdit extends Fragment {
         saveButton = getView().findViewById(R.id.button2);
         saveButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                RoutePlannerFragment.createEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(), timeInput.getText().toString()));
+                RoutePlannerFragment.createEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(),
+                        timeInput.getText().toString(), spinner.getSelectedItem().toString()));
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.setReorderingAllowed(true);
@@ -102,7 +110,8 @@ public class RouteCreateEdit extends Fragment {
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        RoutePlannerFragment.removeEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(), timeInput.getText().toString()));
+                        RoutePlannerFragment.removeEvent(new Event(nameInput.getText().toString(), buildingingInput.getText().toString(),
+                                timeInput.getText().toString(), spinner.getSelectedItem().toString()));
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.setReorderingAllowed(true);
