@@ -29,10 +29,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.WriteAbortedException;
+import java.io.Writer;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +56,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
     private MapView mMapView;
     private boolean mLocationPermissionGranted = false;
+    private String map_status = "FOOD";
     BottomNavigationView bottomNavigationView;
 
     public static MapFragment newInstance() {
@@ -125,6 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
         } else {
             getLocationPermission();
         }
+
     }
 
     @Override
@@ -166,6 +183,41 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
         CameraPosition cp = camBuilder.build();
 
         map.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+
+        // Grab building info
+        InputStream is = getResources().openRawResource(R.raw.buildings);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Could not find building json");
+        }
+
+        String jsonString = writer.toString();
+        JSONArray arr = null;
+        try {
+            arr = new JSONArray(jsonString);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                String name = obj.getString("name");
+                String filter = obj.getString("filter");
+                LatLng loc = new LatLng(obj.getDouble("lat"), obj.getDouble("lon"));
+                if (filter.equals(map_status) || map_status.equals("ALL")) {
+                    Marker marker = map.addMarker(new MarkerOptions()
+                            .position(loc)
+                            .title(name));
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "JSON parsing error");
+        }
+
     }
 
     @Override
@@ -191,15 +243,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
         switch (item.getItemId()) {
             case R.id.directions:
                 Log.d(TAG, "onNavigationItemSelected: directions selected");
+                map_status = "ALL";
+//                mMapView.getM
                 return true;
             case R.id.food:
                 Log.d(TAG, "onNavigationItemSelected: food selected");
+                map_status = "FOOD";
                 return true;
             case R.id.study:
                 Log.d(TAG, "onNavigationItemSelected: study selected");
+                map_status = "STUDY";
                 return true;
             case R.id.fitness:
                 Log.d(TAG, "onNavigationItemSelected: fitness selected");
+                map_status = "FITNESS";
                 return true;
             default:
                 return false;
