@@ -1,8 +1,10 @@
-package com.example.badgernav.ui.buildinginfo;
+package com.example.badgernav.util;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.badgernav.models.BuildingInfo;
 
 import java.util.ArrayList;
 

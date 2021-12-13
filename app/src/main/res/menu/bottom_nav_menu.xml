@@ -5,15 +5,15 @@
 
     <item
         android:id="@+id/directions"
-        android:title="Directions" />
+        android:title="@string/directions" />
     <item
         android:id="@+id/food"
-        android:title="Food" />
+        android:title="@string/food" />
     <item
         android:id="@+id/study"
-        android:title="Study" />
+        android:title="@string/study" />
     <item
         android:id="@+id/fitness"
-        android:title="Fitness" />
+        android:title="@string/fitness" />
 
 </menu>

@@ -28,6 +28,11 @@
         <string name="title_edit">Edit</string>
         <string name="title_edit_done">Done</string>
         <string name="title_contacts_activity">Manage Contacts</string>
+    <string name="directions">Directions</string>
+    <string name="food">Food</string>
+    <string name="study">Study</string>
+    <string name="fitness">Fitness</string>
+    <string name="reset_map">Reset Map</string>
     <string-array name="methods_array">
         <item>Walking</item>
         <item>Biking</item>

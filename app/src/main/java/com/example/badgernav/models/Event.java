@@ -1,4 +1,4 @@
-package com.example.badgernav;
+package com.example.badgernav.models;
 
 public class Event {
     private String title;

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.badgernav.Event;
+import com.example.badgernav.models.Event;
 import com.example.badgernav.R;
 
 import java.util.ArrayList;

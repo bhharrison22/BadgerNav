@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,13 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.badgernav.MainActivity;
 import com.example.badgernav.R;
-import com.example.badgernav.ui.calendar.ContactsActivity;
-import com.example.badgernav.ui.calendar.MainCalendarActivity;
-import com.example.badgernav.ui.calendar.MeetingActivity;
-import com.google.gson.JsonArray;
-import com.google.type.DateTime;
+import com.example.badgernav.models.BuildingInfo;
+import com.example.badgernav.util.BuildingInfoDBHelper;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -46,14 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
 import java.util.Random;
 
 public class BuildingInfoFragment extends Fragment {

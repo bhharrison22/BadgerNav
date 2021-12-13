@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
@@ -28,13 +27,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-import com.example.badgernav.Event;
-import com.example.badgernav.EventDBHelper;
-import com.example.badgernav.MainActivity;
-import com.example.badgernav.NavMenuActivity;
+import com.example.badgernav.models.Event;
+import com.example.badgernav.util.EventDBHelper;
 import com.example.badgernav.R;
-import com.example.badgernav.ui.buildinginfo.BuildingInfo;
-import com.example.badgernav.ui.buildinginfo.BuildingInfoDBHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;

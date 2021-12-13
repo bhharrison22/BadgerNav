@@ -1,4 +1,4 @@
-package com.example.badgernav.ui.buildinginfo;
+package com.example.badgernav.models;
 
 import java.util.Random;
 
