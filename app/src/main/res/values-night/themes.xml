@@ -17,8 +17,8 @@
             <item name="colorPrimaryVariant">@color/RedDark</item>
             <item name="colorOnPrimary">@color/white</item>
             <!-- Secondary brand color. -->
-            <item name="colorSecondary">@color/teal_200</item>
-            <item name="colorSecondaryVariant">@color/teal_200</item>
+            <item name="colorSecondary">@color/Red</item>
+            <item name="colorSecondaryVariant">@color/Red</item>
             <item name="colorOnSecondary">@color/white</item>
             <!--text color-->
             <item name="android:textColor">@color/white</item>
