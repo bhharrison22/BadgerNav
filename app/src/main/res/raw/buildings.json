@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Chazen Museum of Art",
+    "lat": 43.0738381,
+    "lon": -89.4015308,
+    "filter": "STUDY"
+  },
+  {
+    "name": "Dejope Residence Hall",
+    "lat": 43.0777555,
+    "lon": -89.4199606,
+    "filter": "FOOD"
+  },
+  {
+    "name": "Camp Randall Sports Center",
+    "lat": 43.0695274,
+    "lon": -89.4136925,
+    "filter": "FITNESS"
+  }
+]

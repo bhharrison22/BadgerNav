@@ -1,13 +1,8 @@
 package com.example.badgernav;
 
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.ArrayList;
-
-import com.example.badgernav.ui.buildinginfo.BuildingInfo;
-
+import android.database.sqlite.SQLiteStatement;
 import java.util.ArrayList;
 
 public class EventDBHelper {
@@ -25,11 +20,19 @@ public class EventDBHelper {
     }
 
     public void addEvent(Event event) {
-        sqLiteDatabase.execSQL(String.format("INSERT INTO " + TABLE_NAME + " (name, address, hours) VALUES ('%s', '%s', '%s')", event.getTitle(), event.getBuilding(), event.getTime()));
+        SQLiteStatement stmt = sqLiteDatabase.compileStatement("INSERT INTO events (name, address, hours) VALUES (?, ?, ?)");
+        stmt.bindString(1, event.getTitle());
+        stmt.bindString(2, event.getBuilding());
+        stmt.bindString(3, event.getTime());
+        stmt.executeInsert();
     }
 
     public void removeEvent(Event event){
-        sqLiteDatabase.execSQL(String.format("DELETE FROM " + TABLE_NAME + " WHERE name = '%s' AND address = '%s' AND hours = '%s'", event.getTitle(), event.getBuilding(), event.getTime()));
+        SQLiteStatement stmt = sqLiteDatabase.compileStatement("DELETE FROM events WHERE name = ? AND address = ? AND hours = ?");
+        stmt.bindString(1, event.getTitle());
+        stmt.bindString(2, event.getBuilding());
+        stmt.bindString(3, event.getTime());
+        stmt.executeUpdateDelete();
     }
 
     public ArrayList<Event> getEvents() {
