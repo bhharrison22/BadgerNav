@@ -1,12 +1,16 @@
 package com.example.badgernav.ui.map;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +22,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.badgernav.Event;
+import com.example.badgernav.EventDBHelper;
 import com.example.badgernav.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -48,16 +61,25 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.WriteAbortedException;
 import java.io.Writer;
+import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private final String API_KEY = "AIzaSyACtAHIOxePNulTCT-WirMIcT8KW-kXLnw";
+    private final String SEARCH_API_KEY = "AIzaSyACtAHIOxePNulTCT-WirMIcT8KW-kXLnw";
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "MapFragment.java";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
     private MapView mMapView;
     private boolean mLocationPermissionGranted = false;
-    private String map_status = "FOOD";
+    private String map_status = "ALL";
     BottomNavigationView bottomNavigationView;
+    private SQLiteDatabase sqLiteDatabase;
+    private EventDBHelper dbHelper;
+    private ArrayList<Event> eventList;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -68,6 +90,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        sqLiteDatabase = getContext().openOrCreateDatabase("BadgerNav", Context.MODE_PRIVATE, null);
+
         View view = inflater.inflate(R.layout.map_fragment, container, false);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -163,10 +188,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
             boolean success = map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(this.getContext(), R.raw.map_style));
             if (!success) {
-                Log.e(TAG, "Style parsing failed.");
+                Log.e(TAG, "onMapReady: Style parsing failed.");
             }
         } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "Can't find style. Error: ", e);
+            Log.e(TAG, "onMapReady: Can't find style. Error: " + e);
         }
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
@@ -174,6 +199,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
                 != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        dbHelper = new EventDBHelper(sqLiteDatabase);
+        dbHelper.createTable();
+        eventList = dbHelper.getEvents();
+        ArrayList<String> eBuildings = new ArrayList<>();
+        for (Event e: eventList) {
+            eBuildings.add(e.getBuilding());
+            getPlaceInfo(e, map);
+        }
+        Log.i(TAG, String.format("onMapReady: Event Buildings %s", eBuildings));
+
+
+
         map.setMyLocationEnabled(true);
         LatLng start = new LatLng(43.0722515,-89.4035545);
         CameraPosition.Builder camBuilder = CameraPosition.builder();
@@ -184,39 +222,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
 
         map.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
 
-        // Grab building info
-        InputStream is = getResources().openRawResource(R.raw.buildings);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        } catch (IOException e) {
-            Log.e(TAG, "Could not find building json");
-        }
+//        // Grab building info
+//        InputStream is = getResources().openRawResource(R.raw.buildings);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try {
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        } catch (IOException e) {
+//            Log.e(TAG, "onMapReady: Could not find building json");
+//        }
 
-        String jsonString = writer.toString();
-        JSONArray arr = null;
-        try {
-            arr = new JSONArray(jsonString);
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject obj = arr.getJSONObject(i);
-                String name = obj.getString("name");
-                String filter = obj.getString("filter");
-                LatLng loc = new LatLng(obj.getDouble("lat"), obj.getDouble("lon"));
-                if (filter.equals(map_status) || map_status.equals("ALL")) {
-                    Marker marker = map.addMarker(new MarkerOptions()
-                            .position(loc)
-                            .title(name));
-                }
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "JSON parsing error");
-        }
+//        String jsonString = writer.toString();
+//        JSONArray arr = null;
+//        try {
+//            arr = new JSONArray(jsonString);
+//            for (int i = 0; i < arr.length(); i++) {
+//                JSONObject obj = arr.getJSONObject(i);
+//                String name = obj.getString("name");
+//                String filter = obj.getString("filter");
+//                LatLng loc = new LatLng(obj.getDouble("lat"), obj.getDouble("lon"));
+//                if (filter.equals(map_status) || map_status.equals("ALL")) {
+//                    Marker marker = map.addMarker(new MarkerOptions()
+//                            .position(loc)
+//                            .title(name));
+//                }
+//            }
+//        } catch (JSONException e) {
+//            Log.e(TAG, "onMapReady: JSON parsing error");
+//        }
 
     }
 
@@ -262,4 +300,126 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, BottomN
                 return false;
         }
     }
+
+    private void getPlaceInfo(Event e, GoogleMap map) {
+
+        String name = e.getBuilding();
+
+        String encodedName = URLEncoder.encode(name) + "\n";
+        if (name.equals("Ben's House")){
+            encodedName = URLEncoder.encode("107 N Randall Ave, Madison WI");
+        }
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://maps.googleapis.com/maps/api/place/findplacefromtext/json\n" +
+                "?input=" + encodedName +
+                "&inputtype=textquery\n" +
+                "&key=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            JSONObject candidate = (JSONObject)(json.getJSONArray("candidates").get(0));
+                            String placeID = candidate.getString("place_id");
+                            Log.i(TAG, "getPlaceInfo: Calling getGeocode for " + e.getBuilding());
+                            getGeocode(placeID, e, map);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "getPlaceInfo: Find place API fail: " + e.toString());
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "getPlaceInfo: Find place API fail: " + error.toString());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void getPlaceDetails(String placeID) {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://maps.googleapis.com/maps/api/place/details/json\n" +
+                "?placeid=" + placeID + "\n" +
+                "&key=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            String address = json.getJSONObject("result").getString("formatted_address"); // get address
+                            TextView addrNameView = getView().findViewById(R.id.addrText);
+                            addrNameView.setText(address);
+
+                        } catch (JSONException e) {
+                            Log.e(TAG, "getPlaceDetails: Place details API call fail: " + e.toString());
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "getPlaceDetails: Place details API call fail: " + error.toString());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void getGeocode(String placeID, Event e, GoogleMap map) {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url ="https://maps.googleapis.com/maps/api/geocode/json\n" +
+                "?place_id=" + placeID + "\n" +
+                "&key=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            Double lat = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                            Double lng = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+
+                            LatLng loc = new LatLng(lat, lng);
+                            Log.i(TAG, "getGeocode: Lat:" + lat + " Lng:" + lng);
+                            String name = e.getTitle();
+                            String desc = e.getBuilding() + " at " + e.getTime();
+
+                            Marker marker = map.addMarker(new MarkerOptions()
+                                    .snippet(desc)
+                                    .position(loc)
+                                    .title(name));
+
+                        } catch (JSONException e) {
+                            Log.e(TAG, "getGeocode: Geocode API call fail: " + e.toString());
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "getGeocode: Geocode API call fail: " + error.toString());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+
 }
