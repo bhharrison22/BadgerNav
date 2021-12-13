@@ -38,9 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_weight="0"
-                android:textColor="@color/buttonText"
-                android:text="Edit"
                 android:backgroundTint="@color/colorAccent"
+                android:text="Edit"
+                android:textColor="@color/black"
 
                 />
         </LinearLayout>
@@ -289,10 +289,10 @@
             android:id="@+id/cancel_edit_meeting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/buttonText"
+            android:backgroundTint="@color/colorAccent"
             android:onClick="cancelEditMeeting"
             android:text="Cancel"
-            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

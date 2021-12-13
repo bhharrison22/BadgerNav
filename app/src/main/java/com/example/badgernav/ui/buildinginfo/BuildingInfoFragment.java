@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,7 +32,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.badgernav.MainActivity;
 import com.example.badgernav.R;
+import com.example.badgernav.ui.calendar.ContactsActivity;
+import com.example.badgernav.ui.calendar.MainCalendarActivity;
+import com.example.badgernav.ui.calendar.MeetingActivity;
 import com.google.gson.JsonArray;
 import com.google.type.DateTime;
 import com.squareup.picasso.Picasso;
@@ -62,6 +68,8 @@ public class BuildingInfoFragment extends Fragment {
         return new BuildingInfoFragment();
     }
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -74,6 +82,7 @@ public class BuildingInfoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         try {
             fillDropDown();
         }
@@ -175,8 +184,9 @@ public class BuildingInfoFragment extends Fragment {
                             JSONObject candidate = (JSONObject)(json.getJSONArray("candidates").get(0));
                             String placeID = candidate.getString("place_id");
                             getPlaceDetails(placeID);
-                            String tester = "";
-                        } catch (JSONException e) {
+
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
 
@@ -326,6 +336,7 @@ public class BuildingInfoFragment extends Fragment {
         }
 
     }
+
 
 
 
