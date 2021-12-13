@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -87,6 +88,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URLEncoder;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,10 +108,7 @@ public class MapFragment extends Fragment implements
     private UserPosition mUserPosition;
     private MapView mMapView;
     private GoogleMap mGoogleMap;
-    private BottomNavigationView bottomNavigationView;
     private SQLiteDatabase sqLiteDatabase;
-    private EventDBHelper dbHelper;
-    private ArrayList<Event> eventList;
     private FusedLocationProviderClient mFusedLocationClient;
 
     private GeoApiContext mGeoApiContext = null;
@@ -134,7 +133,7 @@ public class MapFragment extends Fragment implements
         initGoogleMap(savedInstanceState);
         getLastKnownLocation();
 
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         view.findViewById(R.id.btn_reset_map).setOnClickListener(this);
         return view;
@@ -173,47 +172,44 @@ public class MapFragment extends Fragment implements
     }
 
     private void addPolylinesToMap(final DirectionsResult result) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "run: result routes: " + result.routes.length);
-                if (mPolyLinesData.size() > 0) {
-                    for (PolylineData polylineData : mPolyLinesData) {
-                        polylineData.getPolyline().remove();
-                    }
-                    mPolyLinesData.clear();
-                    mPolyLinesData = new ArrayList<>();
+        new Handler(Looper.getMainLooper()).post(() -> {
+            Log.d(TAG, "run: result routes: " + result.routes.length);
+            if (mPolyLinesData.size() > 0) {
+                for (PolylineData polylineData : mPolyLinesData) {
+                    polylineData.getPolyline().remove();
+                }
+                mPolyLinesData.clear();
+                mPolyLinesData = new ArrayList<>();
+            }
+
+            double duration = 999999;
+            for (DirectionsRoute route : result.routes) {
+                Log.d(TAG, "run: leg: " + route.legs[0].toString());
+                List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+
+                List<LatLng> newDecodedPath = new ArrayList<>();
+
+                // This loops through all the LatLng coordinates of ONE polyline.
+                for (com.google.maps.model.LatLng latLng : decodedPath) {
+
+                    newDecodedPath.add(new LatLng(
+                            latLng.lat,
+                            latLng.lng
+                    ));
+                }
+                Polyline polyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+                polyline.setColor(ContextCompat.getColor(getActivity(), R.color.dark_grey));
+                polyline.setClickable(true);
+                mPolyLinesData.add(new PolylineData(polyline, route.legs[0]));
+
+                double tempDuration = route.legs[0].duration.inSeconds;
+                if (tempDuration < duration) {
+                    duration = tempDuration;
+                    onPolylineClick(polyline);
+                    zoomRoute(polyline.getPoints());
                 }
 
-                double duration = 999999;
-                for (DirectionsRoute route : result.routes) {
-                    Log.d(TAG, "run: leg: " + route.legs[0].toString());
-                    List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
-
-                    List<LatLng> newDecodedPath = new ArrayList<>();
-
-                    // This loops through all the LatLng coordinates of ONE polyline.
-                    for (com.google.maps.model.LatLng latLng : decodedPath) {
-
-                        newDecodedPath.add(new LatLng(
-                                latLng.lat,
-                                latLng.lng
-                        ));
-                    }
-                    Polyline polyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-                    polyline.setColor(ContextCompat.getColor(getActivity(), R.color.dark_grey));
-                    polyline.setClickable(true);
-                    mPolyLinesData.add(new PolylineData(polyline, route.legs[0]));
-
-                    double tempDuration = route.legs[0].duration.inSeconds;
-                    if (tempDuration < duration) {
-                        duration = tempDuration;
-                        onPolylineClick(polyline);
-                        zoomRoute(polyline.getPoints());
-                    }
-
-                    mSelectedMarker.setVisible(false);
-                }
+                mSelectedMarker.setVisible(false);
             }
         });
     }
@@ -223,20 +219,17 @@ public class MapFragment extends Fragment implements
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    Location location = task.getResult();
-                    GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
-                    Log.d(TAG, "onComplete: latitude: " + geoPoint.getLatitude());
-                    Log.d(TAG, "onComplete: Longitude: " + geoPoint.getLongitude());
+        mFusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Location location = task.getResult();
+                GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                Log.d(TAG, "onComplete: latitude: " + geoPoint.getLatitude());
+                Log.d(TAG, "onComplete: Longitude: " + geoPoint.getLongitude());
 
-                    if (mUserPosition != null) {
-                        mUserPosition.setGeoPoint(geoPoint);
-                    } else {
-                        mUserPosition = new UserPosition(geoPoint);
-                    }
+                if (mUserPosition != null) {
+                    mUserPosition.setGeoPoint(geoPoint);
+                } else {
+                    mUserPosition = new UserPosition(geoPoint);
                 }
             }
         });
@@ -307,7 +300,7 @@ public class MapFragment extends Fragment implements
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -399,9 +392,9 @@ public class MapFragment extends Fragment implements
             ArrayList<String> eBuildings = new ArrayList<>();
             switch (map_status) {
                 case DIRECTIONS: {
-                    dbHelper = new EventDBHelper(sqLiteDatabase);
+                    EventDBHelper dbHelper = new EventDBHelper(sqLiteDatabase);
                     dbHelper.createTable();
-                    eventList = dbHelper.getEvents();
+                    ArrayList<Event> eventList = dbHelper.getEvents();
                     for (Event e : eventList) {
                         eBuildings.add(e.getBuilding());
                         getPlaceInfo(e, mGoogleMap);
@@ -416,7 +409,7 @@ public class MapFragment extends Fragment implements
                     Writer writer = new StringWriter();
                     char[] buffer = new char[1024];
                     try {
-                        Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                        Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                         int n;
                         while ((n = reader.read(buffer)) != -1) {
                             writer.write(buffer, 0, n);
@@ -426,7 +419,7 @@ public class MapFragment extends Fragment implements
                         Log.e(TAG, "Could not find building json");
                     }
                     String jsonString = writer.toString();
-                    JSONArray arr = null;
+                    JSONArray arr;
                     try {
                         arr = new JSONArray(jsonString);
                         for (int i = 0; i < arr.length(); i++) {
@@ -471,6 +464,7 @@ public class MapFragment extends Fragment implements
         mMapView.onLowMemory();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -516,26 +510,18 @@ public class MapFragment extends Fragment implements
                 "&key=" + API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject json = new JSONObject(response);
-                            JSONObject candidate = (JSONObject) (json.getJSONArray("candidates").get(0));
-                            String placeID = candidate.getString("place_id");
-                            Log.i(TAG, "getPlaceInfo: Calling getGeocode for " + e.getBuilding());
-                            getGeocode(placeID, e, map);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "getPlaceInfo: Find place API fail: " + e.toString());
-                        }
-
+                response -> {
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        JSONObject candidate = (JSONObject) (json.getJSONArray("candidates").get(0));
+                        String placeID = candidate.getString("place_id");
+                        Log.i(TAG, "getPlaceInfo: Calling getGeocode for " + e.getBuilding());
+                        getGeocode(placeID, e, map);
+                    } catch (JSONException e1) {
+                        Log.e(TAG, "getPlaceInfo: Find place API fail: " + e1.toString());
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "getPlaceInfo: Find place API fail: " + error.toString());
-            }
-        });
+
+                }, error -> Log.e(TAG, "getPlaceInfo: Find place API fail: " + error.toString()));
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
@@ -549,36 +535,27 @@ public class MapFragment extends Fragment implements
                 "&key=" + API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject json = new JSONObject(response);
-                            Double lat = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
-                            Double lng = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+                response -> {
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        double lat = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                        double lng = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").getDouble("lng");
 
-                            LatLng loc = new LatLng(lat, lng);
-                            Log.i(TAG, "getGeocode: Lat:" + lat + " Lng:" + lng);
-                            String name = e.getTitle();
-                            String desc = e.getBuilding() + " at " + e.getTime();
+                        LatLng loc = new LatLng(lat, lng);
+                        Log.i(TAG, "getGeocode: Lat:" + lat + " Lng:" + lng);
+                        String name = e.getTitle();
+                        String desc = e.getBuilding() + " at " + e.getTime();
 
-                            Marker marker = map.addMarker(new MarkerOptions()
-                                    .snippet(desc)
-                                    .position(loc)
-                                    .title(name));
-                            mMarkers.add(marker);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "getGeocode: Geocode API call fail: " + e.toString());
-                        }
-
+                        Marker marker = map.addMarker(new MarkerOptions()
+                                .snippet(desc)
+                                .position(loc)
+                                .title(name));
+                        mMarkers.add(marker);
+                    } catch (JSONException e1) {
+                        Log.e(TAG, "getGeocode: Geocode API call fail: " + e1.toString());
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "getGeocode: Geocode API call fail: " + error.toString());
-            }
-        });
+
+                }, error -> Log.e(TAG, "getGeocode: Geocode API call fail: " + error.toString()));
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
@@ -607,9 +584,7 @@ public class MapFragment extends Fragment implements
                             Toast.makeText(getActivity(), "Couldn't open map", Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton("No", (dialog, id) -> {
-                        dialog.cancel();
-                    });
+                    .setNegativeButton("No", (dialog, id) -> dialog.cancel());
             final AlertDialog alert = builder.create();
             alert.show();
         } else {
@@ -622,16 +597,14 @@ public class MapFragment extends Fragment implements
                         calculateDirections(marker);
                         dialog.dismiss();
                     })
-                    .setNegativeButton("No", (dialog, id) -> {
-                        dialog.cancel();
-                    });
+                    .setNegativeButton("No", (dialog, id) -> dialog.cancel());
             final AlertDialog alert = builder.create();
             alert.show();
         }
     }
 
     @Override
-    public void onPolylineClick(Polyline polyline) {
+    public void onPolylineClick(@NonNull Polyline polyline) {
         int index = 0;
         for (PolylineData polylineData : mPolyLinesData) {
             index++;
@@ -663,11 +636,8 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_reset_map: {
-                addMapMarkers();
-                break;
-            }
+        if (v.getId() == R.id.btn_reset_map) {
+            addMapMarkers();
         }
     }
 }
