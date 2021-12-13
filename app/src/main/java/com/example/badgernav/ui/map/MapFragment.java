@@ -74,9 +74,17 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URLEncoder;
 
 import java.util.ArrayList;
@@ -93,22 +101,24 @@ public class MapFragment extends Fragment implements
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "MapFragment.java";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
+    enum Status {DIRECTIONS, FOOD, STUDY, FITNESS}
+
     private UserPosition mUserPosition;
     private MapView mMapView;
     private GoogleMap mGoogleMap;
-    private boolean mLocationPermissionGranted = false;
-    enum Status{DIRECTIONS, FOOD, STUDY, FITNESS}
-    private Status map_status = Status.DIRECTIONS;
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
     private SQLiteDatabase sqLiteDatabase;
     private EventDBHelper dbHelper;
     private ArrayList<Event> eventList;
-    private GeoApiContext mGeoApiContext = null;
-    private ArrayList<PolylineData> mPolyLinesData = new ArrayList<>();
     private FusedLocationProviderClient mFusedLocationClient;
+
+    private GeoApiContext mGeoApiContext = null;
     private Marker mSelectedMarker = null;
+    private ArrayList<PolylineData> mPolyLinesData = new ArrayList<>();
     private ArrayList<Marker> mTripMarkers = new ArrayList<>();
     private ArrayList<Marker> mMarkers = new ArrayList<>();
+    private boolean mLocationPermissionGranted = false;
+    private Status map_status = Status.DIRECTIONS;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -386,14 +396,56 @@ public class MapFragment extends Fragment implements
     private void addMapMarkers() {
         if (mGoogleMap != null) {
             resetMap();
-
-            dbHelper = new EventDBHelper(sqLiteDatabase);
-            dbHelper.createTable();
-            eventList = dbHelper.getEvents();
             ArrayList<String> eBuildings = new ArrayList<>();
-            for (Event e : eventList) {
-                eBuildings.add(e.getBuilding());
-                getPlaceInfo(e, mGoogleMap);
+            switch (map_status) {
+                case DIRECTIONS: {
+                    dbHelper = new EventDBHelper(sqLiteDatabase);
+                    dbHelper.createTable();
+                    eventList = dbHelper.getEvents();
+                    for (Event e : eventList) {
+                        eBuildings.add(e.getBuilding());
+                        getPlaceInfo(e, mGoogleMap);
+                    }
+                    break;
+                }
+                case FOOD:
+                case STUDY:
+                case FITNESS: {
+                    // Grab building info
+                    InputStream is = getResources().openRawResource(R.raw.buildings);
+                    Writer writer = new StringWriter();
+                    char[] buffer = new char[1024];
+                    try {
+                        Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                        int n;
+                        while ((n = reader.read(buffer)) != -1) {
+                            writer.write(buffer, 0, n);
+                        }
+                        is.close();
+                    } catch (IOException e) {
+                        Log.e(TAG, "Could not find building json");
+                    }
+                    String jsonString = writer.toString();
+                    JSONArray arr = null;
+                    try {
+                        arr = new JSONArray(jsonString);
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject obj = arr.getJSONObject(i);
+                            String name = obj.getString("name");
+                            String filter = obj.getString("filter");
+                            LatLng loc = new LatLng(obj.getDouble("lat"), obj.getDouble("lon"));
+                            if (filter.equals(map_status.toString())) {
+                                Marker marker = mGoogleMap.addMarker(new MarkerOptions()
+                                        .position(loc)
+                                        .title(name));
+                                mMarkers.add(marker);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "JSON parsing error");
+                    }
+                    break;
+                }
             }
             Log.i(TAG, String.format("addMapMarkers: Event Buildings %s", eBuildings));
             mGoogleMap.setOnInfoWindowClickListener(this);

@@ -1,20 +1,122 @@
 [
   {
-    "name": "Chazen Museum of Art",
-    "lat": 43.0738381,
-    "lon": -89.4015308,
-    "filter": "STUDY"
+    "name": "Four Lakes Market",
+    "lat": 43.07787408798347,
+    "lon": -89.4178618498585,
+    "filter": "FOOD"
   },
   {
-    "name": "Dejope Residence Hall",
-    "lat": 43.0777555,
-    "lon": -89.4199606,
+    "name": "Carson's Market",
+    "lat": 43.0771423,
+    "lon": -89.4135297,
+    "filter": "FOOD"
+  },
+  {
+    "name": "Gordon Avenue Market",
+    "lat": 43.071239056826236,
+    "lon": -89.3981965221861,
+    "filter": "FOOD"
+  },
+  {
+    "name": "Liz Market",
+    "lat": 43.076793741394255,
+    "lon": -89.40696328444918,
+    "filter": "FOOD"
+  },
+  {
+    "name": "Lowell Market",
+    "lat": 43.0760495,
+    "lon": -89.3957638,
+    "filter": "FOOD"
+  },
+  {
+    "name": "Rheta's Market",
+    "lat": 43.07398321890623,
+    "lon": -89.40156265662222,
     "filter": "FOOD"
   },
   {
     "name": "Camp Randall Sports Center",
-    "lat": 43.0695274,
-    "lon": -89.4136925,
+    "lat": 43.069540390994064,
+    "lon": -89.41150157628192,
     "filter": "FITNESS"
+  },
+  {
+    "name": "Nicholas Recreation Center",
+    "lat": 43.070770085195214,
+    "lon": -89.39854731400773,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "Nielsen Tennis Stadium",
+    "lat": 43.07937930963461,
+    "lon": -89.43030476615661,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "Near West Fields",
+    "lat": 43.07758670026215,
+    "lon": -89.423483908733,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "Near East Fields",
+    "lat": 43.077085152079,
+    "lon": -89.41727191285084,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "University Bay Fields",
+    "lat": 43.081953562885616,
+    "lon": -89.43466060063129,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "Cole Recreation Area",
+    "lat": 43.07692366283956,
+    "lon": -89.41497055857855,
+    "filter": "FITNESS"
+  },
+  {
+    "name": "Steenbock Memorial Library",
+    "lat": 43.07628074997026,
+    "lon": -89.41309560013774,
+    "filter": "STUDY"
+  },
+  {
+    "name": "Morgridge Center",
+    "lat": 43.07610810418474,
+    "lon": -89.39840177290316,
+    "filter": "STUDY"
+  },
+  {
+    "name": "MERIT Library",
+    "lat": 43.07129013534505,
+    "lon": -89.40386635391006,
+    "filter": "STUDY"
+  },
+  {
+    "name": "Memorial Library",
+    "lat": 43.07509613064944,
+    "lon": -89.39814278298023,
+    "filter": "STUDY"
+  },
+  {
+    "name": "Law Library",
+    "lat": 43.07450434742819,
+    "lon": -89.40231630642063,
+    "filter": "STUDY"
+  },
+  {
+    "name": "College Library",
+    "lat": 43.0767687342938,
+    "lon": -89.40125868394772,
+    "filter": "STUDY"
+  },
+  {
+    "name": "Wisconsin Historical Society",
+    "lat": 43.075441883243194,
+    "lon": -89.40005279709025,
+    "filter": "STUDY"
   }
 ]
