@@ -71,5 +71,8 @@ public class NavMenuActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 
 }
