@@ -29,5 +29,6 @@
             android:id="@+id/nav_Settings"
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/settings" />
+
     </group>
 </menu>

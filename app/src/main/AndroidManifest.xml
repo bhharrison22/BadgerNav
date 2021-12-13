@@ -28,6 +28,22 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.calendar.MainCalendarActivity"
+            android:exported="true"
+            android:label="@string/calendar_and_events"
+            android:theme="@style/Theme.BadgerNav.NoActionBar" />
+        <activity
+            android:name=".ui.calendar.ContactsActivity"
+            android:exported="true"
+            android:label="@string/calendar_and_events"
+            android:theme="@style/Theme.BadgerNav.NoActionBar" />
+        <activity
+            android:name=".ui.calendar.MeetingActivity"
+            android:exported="true"
+            android:label="@string/calendar_and_events"
+            android:theme="@style/Theme.BadgerNav.NoActionBar" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC1Z-eps9NqIoBTu-AmjEfPvVp0P_MvfHk" />

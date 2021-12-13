@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_Calendar">
+    app:startDestination="@+id/nav_RoutePlanner">
 
-    <fragment
+    <activity
+        android:name="com.example.badgernav.ui.calendar.MainCalendarActivity"
         android:id="@+id/nav_Calendar"
-        android:name="com.example.badgernav.ui.calendar.CalendarFragment"
-        android:label="@string/menu_calendar"
-        tools:layout="@layout/calendar_fragment" />
+        android:label="Calendar"
+        tools:layout="@layout/activity_main_calendar"
+        />
 
     <fragment
         android:id="@+id/nav_Maps"
@@ -40,5 +41,7 @@
         android:name="com.example.badgernav.ui.settings.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/settings_fragment" />
+
+
 
 </navigation>
